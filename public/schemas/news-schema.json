@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pawsafe.org/schemas/news-schema.json",
+  "title": "PawSafe News Article",
+  "description": "JSON Schema specification for PawSafe news articles and API exchanges",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "slug",
+    "summary",
+    "content",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Unique identifier of the news article"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 255,
+      "description": "Title of the article"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "URL-friendly unique slug"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Short excerpt/lead summary"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Full HTML-sanitized article content"
+    },
+    "category": {
+      "type": ["object", "null"],
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "author": {
+      "type": ["object", "null"],
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published", "withdrawn"],
+      "description": "Editorial lifecycle state"
+    },
+    "image_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Public URL of the cover image"
+    },
+    "published_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Publication timestamp (ISO 8601)"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}
