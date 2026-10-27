@@ -22,11 +22,9 @@
             <span>✍️ Autor: <strong>{{ $article->author->name ?? 'Equipa PawSafe' }}</strong></span>
         </div>
 
-        @if($article->image_url)
-            <div style="margin-bottom: 2.5rem; border-radius: var(--radius-lg); overflow: hidden; max-height: 440px; box-shadow: var(--shadow-md);">
-                <img src="{{ $article->image_url }}" alt="{{ $article->title }}" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-        @endif
+        <div style="margin-bottom: 2.5rem; border-radius: var(--radius-lg); overflow: hidden; max-height: 440px; box-shadow: var(--shadow-md);">
+            <img src="{{ $article->image_url }}" alt="{{ $article->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
 
         <div style="background: var(--bg-muted); padding: 1.25rem 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--primary); font-size: 1.1rem; font-weight: 500; margin-bottom: 2rem;">
             {{ $article->summary }}

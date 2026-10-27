@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Services\NewsImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class News extends Model
@@ -27,6 +29,28 @@ class News extends Model
         return [
             'published_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the image URL for this news article.
+     * Returns the uploaded image if available, otherwise fetches a unique
+     * category-relevant photo from an external API.
+     */
+    public function getImageUrlAttribute(): string
+    {
+        // If a local image was uploaded, use it
+        if ($this->image_path) {
+            // Check if it's already a full URL (external API URL stored directly)
+            if (str_starts_with($this->image_path, 'http')) {
+                return $this->image_path;
+            }
+            return Storage::url($this->image_path);
+        }
+
+        // Fetch a unique image from external API based on category
+        $imageService = app(NewsImageService::class);
+        $categorySlug = $this->category?->slug;
+        return $imageService->getImageUrl($this->id, $categorySlug, $this->title);
     }
 
     /**

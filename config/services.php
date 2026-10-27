@@ -45,4 +45,9 @@ return [
         'url' => 'https://api.thecatapi.com/v1',
     ],
 
+    'pexels' => [
+        'key' => env('PEXELS_API_KEY'),
+        'url' => 'https://api.pexels.com/v1',
+    ],
+
 ];

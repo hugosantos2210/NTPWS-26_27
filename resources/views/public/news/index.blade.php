@@ -39,7 +39,7 @@
             @foreach($news as $article)
                 <div class="card">
                     <div class="card-img-wrapper" style="height: 200px;">
-                        <img src="{{ $article->image_url ?? 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80' }}" alt="{{ $article->title }}" class="card-img">
+                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="card-img">
                         @if($article->category)
                             <div class="card-badge">
                                 <span class="badge badge-primary">{{ $article->category->name }}</span>

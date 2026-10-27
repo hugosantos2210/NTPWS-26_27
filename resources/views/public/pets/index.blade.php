@@ -53,7 +53,7 @@
             @foreach($pets as $pet)
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <img src="{{ $pet->image_url ?? 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80' }}" alt="{{ $pet->name }}" class="card-img">
+                        <img src="{{ $pet->image_url }}" alt="{{ $pet->name }}" class="card-img">
                         <div class="card-badge">
                             <span class="badge {{ $pet->status == 'available' ? 'badge-success' : 'badge-warning' }}">
                                 {{ $pet->status == 'available' ? 'Disponível' : ucfirst($pet->status) }}

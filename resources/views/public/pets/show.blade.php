@@ -12,7 +12,7 @@
         <!-- Left: Image & Description -->
         <div>
             <div style="border-radius: var(--radius-lg); overflow: hidden; height: 420px; box-shadow: var(--shadow-md); margin-bottom: 2rem;">
-                <img src="{{ $pet->image_url ?? 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80' }}" alt="{{ $pet->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="{{ $pet->image_url }}" alt="{{ $pet->name }}" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
 
             <div style="background: #fff; padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-bottom: 2rem;">

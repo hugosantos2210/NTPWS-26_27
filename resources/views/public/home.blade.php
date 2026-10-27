@@ -63,7 +63,7 @@
             @forelse($availablePets as $pet)
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <img src="{{ $pet->image_url ?? 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80' }}" alt="{{ $pet->name }}" class="card-img">
+                        <img src="{{ $pet->image_url }}" alt="{{ $pet->name }}" class="card-img">
                         <div class="card-badge">
                             <span class="badge badge-success">{{ ucfirst($pet->species) }}</span>
                         </div>
@@ -106,7 +106,7 @@
             @forelse($latestNews as $article)
                 <div class="card">
                     <div class="card-img-wrapper" style="height:180px;">
-                        <img src="{{ $article->image_url ?? 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80' }}" alt="{{ $article->title }}" class="card-img">
+                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="card-img">
                         @if($article->category)
                             <div class="card-badge">
                                 <span class="badge badge-primary">{{ $article->category->name }}</span>

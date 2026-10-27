@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Services\PetImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Pet extends Model
 {
@@ -19,6 +21,27 @@ class Pet extends Model
         'image_path',
         'status',
     ];
+
+    /**
+     * Get the image URL for this pet.
+     * Returns the uploaded image if available, otherwise fetches a unique
+     * breed-specific photo from TheDogAPI/TheCatAPI external API.
+     */
+    public function getImageUrlAttribute(): string
+    {
+        // If a local image was uploaded, use it
+        if ($this->image_path) {
+            // Check if it's already a full URL (external API URL stored directly)
+            if (str_starts_with($this->image_path, 'http')) {
+                return $this->image_path;
+            }
+            return Storage::url($this->image_path);
+        }
+
+        // Fetch a unique image from the external API based on species and breed
+        $imageService = app(PetImageService::class);
+        return $imageService->getImageUrl($this->id, $this->species, $this->breed);
+    }
 
     /**
      * Get the adoption requests for this pet.
