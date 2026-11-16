@@ -2,6 +2,10 @@
 
 @section('title', 'Editar Notícia — PawSafe CMS')
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+@endpush
+
 @section('content')
 <div class="admin-header">
     <div>
@@ -55,7 +59,8 @@
 
         <div class="form-group">
             <label for="content" class="form-label">Conteúdo Completo * (HTML suportado com sanitização segura)</label>
-            <textarea name="content" id="content" rows="8" class="form-control" required>{{ old('content', $news->content) }}</textarea>
+            <div id="quill-editor" style="min-height: 300px; background: white;">{!! old('content', $news->content) !!}</div>
+            <input type="hidden" name="content" id="content">
             @error('content') <div class="form-error">{{ $message }}</div> @enderror
         </div>
 
@@ -76,4 +81,27 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+<script>
+const quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['blockquote', 'code-block'],
+            ['link', 'image'],
+            ['clean']
+        ]
+    }
+});
+// Sincronizar no submit
+document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('content').value = quill.root.innerHTML;
+});
+</script>
+@endpush
 @endsection

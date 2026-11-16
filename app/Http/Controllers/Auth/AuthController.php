@@ -83,17 +83,27 @@ class AuthController extends Controller
             ])->onlyInput('email');
         }
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            // Regenerate session ID after login to prevent session fixation
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('home'))
-                ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
+        // Validate password against user record
+        if (!Auth::validate($credentials)) {
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        // If Two-Factor Authentication is active, route through 2FA challenge
+        if ($user->hasTwoFactorEnabled()) {
+            $request->session()->put('2fa:user_id', $user->id);
+            $request->session()->put('2fa:remember', $request->boolean('remember'));
+
+            return redirect()->route('two-factor.challenge');
+        }
+
+        // Standard login when 2FA is not enabled
+        Auth::login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('home'))
+            ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
     }
 
     /**

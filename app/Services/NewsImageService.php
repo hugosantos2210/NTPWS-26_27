@@ -130,7 +130,7 @@ class NewsImageService
                 'https://images.unsplash.com/photo-1527525443983-6e60c75fff46?auto=format&fit=crop&w=600&q=80',
                 'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80',
                 'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=600&q=80',
-                'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=600&q=80',
             ],
             'volunteer' => [
                 'https://images.unsplash.com/photo-1415369629372-26f2fe60c467?auto=format&fit=crop&w=600&q=80',
@@ -140,9 +140,9 @@ class NewsImageService
             ],
             'tips-training' => [
                 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80',
-                'https://images.unsplash.com/photo-1522276498395-f4f68f7f8571?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=600&q=80',
                 'https://images.unsplash.com/photo-1535930749574-1399327ce78f?auto=format&fit=crop&w=600&q=80',
-                'https://images.unsplash.com/photo-1504595403791-c3c3f3e1cf30?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1560807707-8cc77767d783?auto=format&fit=crop&w=600&q=80',
             ],
         ];
 
@@ -151,11 +151,11 @@ class NewsImageService
             'https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1583337130417-13104dec14a8?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1415369629372-26f2fe60c467?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1522276498395-f4f68f7f8571?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1581888227599-779811939961?auto=format&fit=crop&w=600&q=80',
         ];
 
         $photos = $categoryPhotos[$categorySlug] ?? $defaultPhotos;

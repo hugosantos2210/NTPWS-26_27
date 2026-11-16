@@ -1,0 +1,357 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="980" viewBox="0 0 1200 980" font-family="'Segoe UI', Arial, sans-serif" font-size="12">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrow-end" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <style>
+      .table-header { fill: #2d6a4f; }
+      .table-header-pk { fill: #1b4332; }
+      .table-bg { fill: #f8fdf9; }
+      .table-border { stroke: #2d6a4f; stroke-width: 1.5; fill: none; }
+      .row-pk { fill: #d8f3dc; }
+      .row-fk { fill: #ffe8cc; }
+      .row-alt { fill: #ffffff; }
+      .row-even { fill: #f0faf2; }
+      .col-name { font-weight: bold; fill: #1b4332; }
+      .col-type { fill: #555; font-style: italic; }
+      .col-pk { fill: #0a3622; font-weight: bold; }
+      .col-fk { fill: #7c4a00; font-weight: bold; }
+      .table-title { fill: white; font-weight: bold; font-size: 13px; }
+      .relation-line { stroke: #555; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+      .legend-box { stroke: #ccc; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="980" fill="#f4f7f4"/>
+
+  <!-- Title -->
+  <text x="600" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b4332">PawSafe — Diagrama Entidade-Relação</text>
+  <text x="600" y="52" text-anchor="middle" font-size="11" fill="#555">Laravel 13 · SQLite (dev) / MySQL (prod)</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: roles  (x=40, y=80) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-roles">
+    <rect x="40" y="70" width="220" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="150" y="88" text-anchor="middle" class="table-title">roles</text>
+    <!-- rows -->
+    <rect x="40" y="96" width="220" height="20" class="row-pk"/>
+    <rect x="40" y="116" width="220" height="20" class="row-even"/>
+    <rect x="40" y="136" width="220" height="20" class="row-alt"/>
+    <rect x="40" y="156" width="220" height="20" class="row-even"/>
+    <rect x="40" y="176" width="220" height="20" class="row-alt"/>
+    <rect x="40" y="196" width="220" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="40" y="96" width="220" height="120" class="table-border"/>
+    <!-- col texts -->
+    <text x="48" y="110" class="col-pk">🔑 id</text>
+    <text x="160" y="110" class="col-type">BIGINT PK AI</text>
+    <text x="48" y="130" class="col-name">name</text>
+    <text x="160" y="130" class="col-type">VARCHAR(50) UQ</text>
+    <text x="48" y="150" class="col-name">description</text>
+    <text x="160" y="150" class="col-type">TEXT NULL</text>
+    <text x="48" y="170" class="col-name">created_at</text>
+    <text x="160" y="170" class="col-type">TIMESTAMP</text>
+    <text x="48" y="190" class="col-name">updated_at</text>
+    <text x="160" y="190" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: users  (x=320, y=70) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-users">
+    <rect x="320" y="70" width="260" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="450" y="88" text-anchor="middle" class="table-title">users</text>
+    <!-- rows -->
+    <rect x="320" y="96" width="260" height="20" class="row-pk"/>
+    <rect x="320" y="116" width="260" height="20" class="row-even"/>
+    <rect x="320" y="136" width="260" height="20" class="row-alt"/>
+    <rect x="320" y="156" width="260" height="20" class="row-even"/>
+    <rect x="320" y="176" width="260" height="20" class="row-alt"/>
+    <rect x="320" y="196" width="260" height="20" class="row-fk"/>
+    <rect x="320" y="216" width="260" height="20" class="row-even"/>
+    <rect x="320" y="236" width="260" height="20" class="row-alt"/>
+    <rect x="320" y="256" width="260" height="20" class="row-even"/>
+    <rect x="320" y="276" width="260" height="20" class="row-alt"/>
+    <!-- border -->
+    <rect x="320" y="96" width="260" height="200" class="table-border"/>
+    <!-- col texts -->
+    <text x="328" y="110" class="col-pk">🔑 id</text>
+    <text x="460" y="110" class="col-type">BIGINT PK AI</text>
+    <text x="328" y="130" class="col-name">name</text>
+    <text x="460" y="130" class="col-type">VARCHAR(255)</text>
+    <text x="328" y="150" class="col-name">email</text>
+    <text x="460" y="150" class="col-type">VARCHAR(255) UQ</text>
+    <text x="328" y="170" class="col-name">password</text>
+    <text x="460" y="170" class="col-type">VARCHAR(255)</text>
+    <text x="328" y="190" class="col-name">phone</text>
+    <text x="460" y="190" class="col-type">VARCHAR(20) NULL</text>
+    <text x="328" y="210" class="col-fk">🔗 role_id</text>
+    <text x="460" y="210" class="col-type">BIGINT FK→roles</text>
+    <text x="328" y="230" class="col-name">avatar_path</text>
+    <text x="460" y="230" class="col-type">VARCHAR NULL</text>
+    <text x="328" y="250" class="col-name">is_active</text>
+    <text x="460" y="250" class="col-type">BOOLEAN def 1</text>
+    <text x="328" y="270" class="col-name">created_at</text>
+    <text x="460" y="270" class="col-type">TIMESTAMP</text>
+    <text x="328" y="290" class="col-name">updated_at</text>
+    <text x="460" y="290" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: categories  (x=660, y=70) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-categories">
+    <rect x="660" y="70" width="250" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="785" y="88" text-anchor="middle" class="table-title">categories</text>
+    <!-- rows -->
+    <rect x="660" y="96" width="250" height="20" class="row-pk"/>
+    <rect x="660" y="116" width="250" height="20" class="row-even"/>
+    <rect x="660" y="136" width="250" height="20" class="row-alt"/>
+    <rect x="660" y="156" width="250" height="20" class="row-even"/>
+    <rect x="660" y="176" width="250" height="20" class="row-alt"/>
+    <rect x="660" y="196" width="250" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="660" y="96" width="250" height="120" class="table-border"/>
+    <!-- col texts -->
+    <text x="668" y="110" class="col-pk">🔑 id</text>
+    <text x="780" y="110" class="col-type">BIGINT PK AI</text>
+    <text x="668" y="130" class="col-name">name</text>
+    <text x="780" y="130" class="col-type">VARCHAR(100)</text>
+    <text x="668" y="150" class="col-name">slug</text>
+    <text x="780" y="150" class="col-type">VARCHAR(100) UQ</text>
+    <text x="668" y="170" class="col-name">description</text>
+    <text x="780" y="170" class="col-type">TEXT NULL</text>
+    <text x="668" y="190" class="col-name">created_at</text>
+    <text x="780" y="190" class="col-type">TIMESTAMP</text>
+    <text x="668" y="210" class="col-name">updated_at</text>
+    <text x="780" y="210" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: news  (x=320, y=390) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-news">
+    <rect x="320" y="390" width="310" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="475" y="408" text-anchor="middle" class="table-title">news</text>
+    <!-- rows -->
+    <rect x="320" y="416" width="310" height="20" class="row-pk"/>
+    <rect x="320" y="436" width="310" height="20" class="row-even"/>
+    <rect x="320" y="456" width="310" height="20" class="row-alt"/>
+    <rect x="320" y="476" width="310" height="20" class="row-even"/>
+    <rect x="320" y="496" width="310" height="20" class="row-alt"/>
+    <rect x="320" y="516" width="310" height="20" class="row-fk"/>
+    <rect x="320" y="536" width="310" height="20" class="row-fk"/>
+    <rect x="320" y="556" width="310" height="20" class="row-even"/>
+    <rect x="320" y="576" width="310" height="20" class="row-alt"/>
+    <rect x="320" y="596" width="310" height="20" class="row-even"/>
+    <rect x="320" y="616" width="310" height="20" class="row-alt"/>
+    <rect x="320" y="636" width="310" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="320" y="416" width="310" height="240" class="table-border"/>
+    <!-- col texts -->
+    <text x="328" y="430" class="col-pk">🔑 id</text>
+    <text x="470" y="430" class="col-type">BIGINT PK AI</text>
+    <text x="328" y="450" class="col-name">title</text>
+    <text x="470" y="450" class="col-type">VARCHAR(255)</text>
+    <text x="328" y="470" class="col-name">slug</text>
+    <text x="470" y="470" class="col-type">VARCHAR(255) UQ</text>
+    <text x="328" y="490" class="col-name">summary</text>
+    <text x="470" y="490" class="col-type">TEXT NULL</text>
+    <text x="328" y="510" class="col-name">content</text>
+    <text x="470" y="510" class="col-type">LONGTEXT</text>
+    <text x="328" y="530" class="col-fk">🔗 category_id</text>
+    <text x="470" y="530" class="col-type">BIGINT FK→categories</text>
+    <text x="328" y="550" class="col-fk">🔗 author_id</text>
+    <text x="470" y="550" class="col-type">BIGINT FK→users</text>
+    <text x="328" y="570" class="col-name">image_path</text>
+    <text x="470" y="570" class="col-type">VARCHAR NULL</text>
+    <text x="328" y="590" class="col-name">status</text>
+    <text x="470" y="590" class="col-type">ENUM(draft,pub,withdrawn)</text>
+    <text x="328" y="610" class="col-name">published_at</text>
+    <text x="470" y="610" class="col-type">TIMESTAMP NULL</text>
+    <text x="328" y="630" class="col-name">created_at</text>
+    <text x="470" y="630" class="col-type">TIMESTAMP</text>
+    <text x="328" y="650" class="col-name">updated_at</text>
+    <text x="470" y="650" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: pets  (x=40, y=390) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-pets">
+    <rect x="40" y="390" width="250" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="165" y="408" text-anchor="middle" class="table-title">pets</text>
+    <!-- rows -->
+    <rect x="40" y="416" width="250" height="20" class="row-pk"/>
+    <rect x="40" y="436" width="250" height="20" class="row-even"/>
+    <rect x="40" y="456" width="250" height="20" class="row-alt"/>
+    <rect x="40" y="476" width="250" height="20" class="row-even"/>
+    <rect x="40" y="496" width="250" height="20" class="row-alt"/>
+    <rect x="40" y="516" width="250" height="20" class="row-even"/>
+    <rect x="40" y="536" width="250" height="20" class="row-alt"/>
+    <rect x="40" y="556" width="250" height="20" class="row-even"/>
+    <rect x="40" y="576" width="250" height="20" class="row-alt"/>
+    <rect x="40" y="596" width="250" height="20" class="row-even"/>
+    <rect x="40" y="616" width="250" height="20" class="row-alt"/>
+    <rect x="40" y="636" width="250" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="40" y="416" width="250" height="240" class="table-border"/>
+    <!-- col texts -->
+    <text x="48" y="430" class="col-pk">🔑 id</text>
+    <text x="170" y="430" class="col-type">BIGINT PK AI</text>
+    <text x="48" y="450" class="col-name">name</text>
+    <text x="170" y="450" class="col-type">VARCHAR(100)</text>
+    <text x="48" y="470" class="col-name">species</text>
+    <text x="170" y="470" class="col-type">VARCHAR(50)</text>
+    <text x="48" y="490" class="col-name">breed</text>
+    <text x="170" y="490" class="col-type">VARCHAR(100) NULL</text>
+    <text x="48" y="510" class="col-name">age_years</text>
+    <text x="170" y="510" class="col-type">TINYINT NULL</text>
+    <text x="48" y="530" class="col-name">age_months</text>
+    <text x="170" y="530" class="col-type">TINYINT NULL</text>
+    <text x="48" y="550" class="col-name">gender</text>
+    <text x="170" y="550" class="col-type">ENUM(M,F,unknown)</text>
+    <text x="48" y="570" class="col-name">size</text>
+    <text x="170" y="570" class="col-type">ENUM(small,medium,large)</text>
+    <text x="48" y="590" class="col-name">description</text>
+    <text x="170" y="590" class="col-type">TEXT NULL</text>
+    <text x="48" y="610" class="col-name">image_path</text>
+    <text x="170" y="610" class="col-type">VARCHAR NULL</text>
+    <text x="48" y="630" class="col-name">status</text>
+    <text x="170" y="630" class="col-type">ENUM(available,pending,adopted)</text>
+    <text x="48" y="650" class="col-name">created_at / updated_at</text>
+    <text x="170" y="650" class="col-type">TIMESTAMPS</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: adoption_requests  (x=40, y=720) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-adoption">
+    <rect x="40" y="720" width="310" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="195" y="738" text-anchor="middle" class="table-title">adoption_requests</text>
+    <!-- rows -->
+    <rect x="40" y="746" width="310" height="20" class="row-pk"/>
+    <rect x="40" y="766" width="310" height="20" class="row-fk"/>
+    <rect x="40" y="786" width="310" height="20" class="row-fk"/>
+    <rect x="40" y="806" width="310" height="20" class="row-even"/>
+    <rect x="40" y="826" width="310" height="20" class="row-alt"/>
+    <rect x="40" y="846" width="310" height="20" class="row-even"/>
+    <rect x="40" y="866" width="310" height="20" class="row-alt"/>
+    <rect x="40" y="886" width="310" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="40" y="746" width="310" height="160" class="table-border"/>
+    <!-- col texts -->
+    <text x="48" y="760" class="col-pk">🔑 id</text>
+    <text x="190" y="760" class="col-type">BIGINT PK AI</text>
+    <text x="48" y="780" class="col-fk">🔗 pet_id</text>
+    <text x="190" y="780" class="col-type">BIGINT FK→pets</text>
+    <text x="48" y="800" class="col-fk">🔗 user_id</text>
+    <text x="190" y="800" class="col-type">BIGINT FK→users</text>
+    <text x="48" y="820" class="col-name">message</text>
+    <text x="190" y="820" class="col-type">TEXT NULL</text>
+    <text x="48" y="840" class="col-name">status</text>
+    <text x="190" y="840" class="col-type">ENUM(pending,approved,rejected)</text>
+    <text x="48" y="860" class="col-name">admin_notes</text>
+    <text x="190" y="860" class="col-type">TEXT NULL</text>
+    <text x="48" y="880" class="col-name">created_at</text>
+    <text x="190" y="880" class="col-type">TIMESTAMP</text>
+    <text x="48" y="900" class="col-name">updated_at</text>
+    <text x="190" y="900" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TABLE: breed_cache  (x=700, y=390) -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="tbl-breed">
+    <rect x="700" y="390" width="460" height="26" class="table-header" rx="4" ry="4"/>
+    <text x="930" y="408" text-anchor="middle" class="table-title">breed_cache</text>
+    <!-- rows -->
+    <rect x="700" y="416" width="460" height="20" class="row-pk"/>
+    <rect x="700" y="436" width="460" height="20" class="row-even"/>
+    <rect x="700" y="456" width="460" height="20" class="row-alt"/>
+    <rect x="700" y="476" width="460" height="20" class="row-even"/>
+    <rect x="700" y="496" width="460" height="20" class="row-alt"/>
+    <rect x="700" y="516" width="460" height="20" class="row-even"/>
+    <rect x="700" y="536" width="460" height="20" class="row-alt"/>
+    <rect x="700" y="556" width="460" height="20" class="row-even"/>
+    <!-- border -->
+    <rect x="700" y="416" width="460" height="160" class="table-border"/>
+    <!-- col texts -->
+    <text x="708" y="430" class="col-pk">🔑 id</text>
+    <text x="880" y="430" class="col-type">BIGINT PK AI</text>
+    <text x="708" y="450" class="col-name">species</text>
+    <text x="880" y="450" class="col-type">VARCHAR(50)</text>
+    <text x="708" y="470" class="col-name">breed_name</text>
+    <text x="880" y="470" class="col-type">VARCHAR(100)</text>
+    <text x="708" y="490" class="col-name">data_json</text>
+    <text x="880" y="490" class="col-type">JSON / LONGTEXT</text>
+    <text x="708" y="510" class="col-name">image_url</text>
+    <text x="880" y="510" class="col-type">VARCHAR(500) NULL</text>
+    <text x="708" y="530" class="col-name">fetched_at</text>
+    <text x="880" y="530" class="col-type">TIMESTAMP</text>
+    <text x="708" y="550" class="col-name">created_at</text>
+    <text x="880" y="550" class="col-type">TIMESTAMP</text>
+    <text x="708" y="570" class="col-name">updated_at</text>
+    <text x="880" y="570" class="col-type">TIMESTAMP</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- RELATIONSHIP LINES -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- roles → users (role_id FK) -->
+  <!-- roles right edge (260, 157) → users left (320, 206) -->
+  <line x1="260" y1="157" x2="320" y2="206" class="relation-line"/>
+  <text x="265" y="175" font-size="10" fill="#444">1</text>
+  <text x="300" y="202" font-size="10" fill="#444">N</text>
+
+  <!-- users → news (author_id FK) -->
+  <!-- users bottom (450, 296) → news top (475, 390) -->
+  <line x1="450" y1="296" x2="475" y2="390" class="relation-line"/>
+  <text x="455" y="315" font-size="10" fill="#444">1</text>
+  <text x="478" y="385" font-size="10" fill="#444">N</text>
+
+  <!-- categories → news (category_id FK) -->
+  <!-- categories bottom (785, 216) → news top-right area (530, 390) -->
+  <polyline points="785,216 785,310 530,310 530,390" class="relation-line"/>
+  <text x="790" y="235" font-size="10" fill="#444">1</text>
+  <text x="533" y="385" font-size="10" fill="#444">N</text>
+
+  <!-- pets → adoption_requests (pet_id FK) -->
+  <!-- pets bottom (165, 656) → adoption_requests top (165, 720) -->
+  <line x1="165" y1="656" x2="165" y2="720" class="relation-line"/>
+  <text x="170" y="672" font-size="10" fill="#444">1</text>
+  <text x="170" y="716" font-size="10" fill="#444">N</text>
+
+  <!-- users → adoption_requests (user_id FK) -->
+  <!-- users bottom-left area (340, 296) → adoption_requests top-right (220, 720) -->
+  <polyline points="340,296 340,360 220,360 220,720" class="relation-line"/>
+  <text x="344" y="315" font-size="10" fill="#444">1</text>
+  <text x="224" y="715" font-size="10" fill="#444">N</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LEGEND -->
+  <!-- ═══════════════════════════════════════ -->
+  <g id="legend" transform="translate(700, 620)">
+    <rect x="0" y="0" width="460" height="120" rx="6" ry="6" fill="white" stroke="#aaa" stroke-width="1"/>
+    <text x="230" y="20" text-anchor="middle" font-weight="bold" font-size="12" fill="#1b4332">Legenda</text>
+    <!-- PK -->
+    <rect x="12" y="30" width="16" height="14" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="1"/>
+    <text x="34" y="42" font-size="11" fill="#333">🔑 Chave Primária (PK)</text>
+    <!-- FK -->
+    <rect x="12" y="52" width="16" height="14" fill="#ffe8cc" stroke="#2d6a4f" stroke-width="1"/>
+    <text x="34" y="64" font-size="11" fill="#333">🔗 Chave Estrangeira (FK)</text>
+    <!-- Normal -->
+    <rect x="12" y="74" width="16" height="14" fill="#f0faf2" stroke="#2d6a4f" stroke-width="1"/>
+    <text x="34" y="86" font-size="11" fill="#333">Atributo normal</text>
+    <!-- Arrow -->
+    <line x1="12" y1="104" x2="40" y2="104" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="50" y="108" font-size="11" fill="#333">Relação 1→N (FK aponta para PK)</text>
+  </g>
+
+</svg>

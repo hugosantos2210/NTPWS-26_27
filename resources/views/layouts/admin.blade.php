@@ -54,6 +54,26 @@
             </ul>
 
             <div style="padding:1.25rem; border-top:1px solid rgba(255,255,255,0.08);">
+                <!-- Language Selector -->
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.4rem;">{{ __('messages.language') }}:</div>
+                    <div style="display:flex; gap:0.35rem;">
+                        @php $currentLocale = app()->getLocale(); @endphp
+                        <a href="{{ route('locale.change', 'pt') }}" style="flex:1; display:flex; align-items:center; justify-content:center; gap:0.25rem; padding:0.25rem; border-radius:4px; font-size:0.75rem; text-decoration:none; background: {{ $currentLocale === 'pt' ? 'var(--primary)' : 'rgba(255,255,255,0.1)' }}; color:#fff; font-weight:{{ $currentLocale === 'pt' ? '700' : '400' }};">
+                            <img src="{{ asset('images/flags/pt.svg') }}" alt="PT" style="width:16px; height:11px; border-radius:2px; object-fit:cover;">
+                            <span>PT</span>
+                        </a>
+                        <a href="{{ route('locale.change', 'en') }}" style="flex:1; display:flex; align-items:center; justify-content:center; gap:0.25rem; padding:0.25rem; border-radius:4px; font-size:0.75rem; text-decoration:none; background: {{ $currentLocale === 'en' ? 'var(--primary)' : 'rgba(255,255,255,0.1)' }}; color:#fff; font-weight:{{ $currentLocale === 'en' ? '700' : '400' }};">
+                            <img src="{{ asset('images/flags/gb.svg') }}" alt="EN" style="width:16px; height:11px; border-radius:2px; object-fit:cover;">
+                            <span>EN</span>
+                        </a>
+                        <a href="{{ route('locale.change', 'hr') }}" style="flex:1; display:flex; align-items:center; justify-content:center; gap:0.25rem; padding:0.25rem; border-radius:4px; font-size:0.75rem; text-decoration:none; background: {{ $currentLocale === 'hr' ? 'var(--primary)' : 'rgba(255,255,255,0.1)' }}; color:#fff; font-weight:{{ $currentLocale === 'hr' ? '700' : '400' }};">
+                            <img src="{{ asset('images/flags/hr.svg') }}" alt="HR" style="width:16px; height:11px; border-radius:2px; object-fit:cover;">
+                            <span>HR</span>
+                        </a>
+                    </div>
+                </div>
+
                 <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.5rem;">Sessão iniciada como:</div>
                 <div style="font-weight:700; color:#fff; font-size:0.95rem;">{{ auth()->user()->name }}</div>
                 <div style="margin-top:0.35rem;">

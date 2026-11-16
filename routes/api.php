@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
     });
 
     // Protected endpoints (require authentication)
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('auth')->group(function () {
         Route::post('/news', [ApiNewsController::class, 'store'])->middleware('role:editor,admin');
         Route::patch('/news/{id}', [ApiNewsController::class, 'update'])->middleware('role:editor,admin');
         Route::delete('/news/{id}', [ApiNewsController::class, 'destroy'])->middleware('role:editor,admin');

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="20" height="14">
+  <rect width="600" height="400" fill="#DA291C"/>
+  <rect width="240" height="400" fill="#046A38"/>
+  <g transform="translate(240,200)">
+    <!-- Armillary Sphere -->
+    <circle r="80" fill="none" stroke="#FFD100" stroke-width="12"/>
+    <ellipse rx="80" ry="24" fill="none" stroke="#FFD100" stroke-width="8"/>
+    <line x1="-80" y1="0" x2="80" y2="0" stroke="#FFD100" stroke-width="8"/>
+    <line x1="0" y1="-80" x2="0" y2="80" stroke="#FFD100" stroke-width="8"/>
+    <line x1="-56" y1="-56" x2="56" y2="56" stroke="#FFD100" stroke-width="8"/>
+    <!-- Shield -->
+    <path d="M -45,-50 L 45,-50 L 45,10 C 45,45 0,60 0,60 C 0,60 -45,45 -45,10 Z" fill="#FFFFFF" stroke="#DA291C" stroke-width="10"/>
+    <!-- Inner blue escutcheon -->
+    <path d="M -22,-30 L 22,-30 L 22,0 C 22,20 0,30 0,30 C 0,30 -22,20 -22,0 Z" fill="#002B7F"/>
+    <circle cx="0" cy="-15" r="4" fill="#FFFFFF"/>
+    <circle cx="-10" cy="-5" r="4" fill="#FFFFFF"/>
+    <circle cx="10" cy="-5" r="4" fill="#FFFFFF"/>
+    <circle cx="0" cy="5" r="4" fill="#FFFFFF"/>
+  </g>
+</svg>

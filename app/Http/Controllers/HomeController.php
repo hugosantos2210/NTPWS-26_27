@@ -40,4 +40,16 @@ class HomeController extends Controller
     {
         return view('public.about');
     }
+
+    /**
+     * Change application locale.
+     */
+    public function changeLocale(string $locale)
+    {
+        if (in_array($locale, \App\Http\Middleware\SetLocale::SUPPORTED_LOCALES, true)) {
+            session(['locale' => $locale]);
+        }
+
+        return redirect()->back(fallback: route('home'));
+    }
 }

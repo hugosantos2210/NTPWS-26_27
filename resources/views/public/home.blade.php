@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Início — PawSafe Abrigo e Adoção')
+@section('title', __('messages.home') . ' — PawSafe')
 
 @section('content')
 <!-- Hero Section -->
@@ -8,28 +8,28 @@
     <div class="container">
         <div class="hero-grid">
             <div>
-                <span class="hero-tag">✨ Conectamos Vidas, Criamos Famílias</span>
-                <h1 class="hero-title">Dê uma segunda oportunidade a quem só sabe <span>amar</span>.</h1>
+                <span class="hero-tag">{{ __('messages.hero_badge') }}</span>
+                <h1 class="hero-title">{{ __('messages.hero_title') }} <span>{{ __('messages.hero_title_highlight') }}</span>.</h1>
                 <p class="hero-subtitle">
-                    O PawSafe é um refúgio e plataforma moderna dedicada ao resgate, cuidado e encaminhamento responsável de cães e gatos para famílias amorosas.
+                    {{ __('messages.hero_subtitle') }}
                 </p>
                 <div class="hero-cta">
-                    <a href="{{ route('pets.index') }}" class="btn btn-primary btn-lg">🐾 Encontrar um Amigo</a>
-                    <a href="{{ route('news.index') }}" class="btn btn-outline btn-lg">📰 Ler Notícias & Campanhas</a>
+                    <a href="{{ route('pets.index') }}" class="btn btn-primary btn-lg">{{ __('messages.find_friend_btn') }}</a>
+                    <a href="{{ route('news.index') }}" class="btn btn-outline btn-lg">{{ __('messages.read_news_btn') }}</a>
                 </div>
 
                 <div class="hero-stats">
                     <div class="stat-item">
                         <span class="stat-number">{{ $stats['total_pets'] ?? 0 }}+</span>
-                        <span class="stat-label">Animais Resgatados</span>
+                        <span class="stat-label">{{ __('messages.rescued_animals') }}</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">{{ $stats['adopted'] ?? 0 }}</span>
-                        <span class="stat-label">Adotados & Felizes</span>
+                        <span class="stat-label">{{ __('messages.adopted_happy') }}</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">{{ $stats['available'] ?? 0 }}</span>
-                        <span class="stat-label">À Espera de Lar</span>
+                        <span class="stat-label">{{ __('messages.waiting_home') }}</span>
                     </div>
                 </div>
             </div>
@@ -37,11 +37,11 @@
             <div>
                 <div style="background:linear-gradient(135deg, rgba(13,148,136,0.1), rgba(99,102,241,0.15)); padding:2rem; border-radius:var(--radius-lg); border:1px solid var(--border); text-align:center;">
                     <div style="font-size:4rem; margin-bottom:1rem;">🐶🐱</div>
-                    <h3>Pronto para Adotar?</h3>
+                    <h3>{{ __('messages.ready_to_adopt') }}</h3>
                     <p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.5rem;">
-                        O processo é transparente e seguro. Escolha o seu animal, leia os detalhes e faça o seu pedido de adoção online.
+                        {{ __('messages.ready_to_adopt_desc') }}
                     </p>
-                    <a href="{{ route('about') }}" class="btn btn-accent" style="margin-top:1rem;">Como Funciona o Processo</a>
+                    <a href="{{ route('about') }}" class="btn btn-accent" style="margin-top:1rem;">{{ __('messages.how_it_works_btn') }}</a>
                 </div>
             </div>
         </div>
@@ -53,39 +53,39 @@
     <div class="container">
         <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem;">
             <div>
-                <span class="badge badge-primary">Amigos de Quatro Patas</span>
-                <h2 style="margin-top:0.5rem;">À Procura de uma Família</h2>
+                <span class="badge badge-primary">{{ __('messages.pets_badge') }}</span>
+                <h2 style="margin-top:0.5rem;">{{ __('messages.looking_for_family') }}</h2>
             </div>
-            <a href="{{ route('pets.index') }}" class="btn btn-outline">Ver Todos os Animais ➔</a>
+            <a href="{{ route('pets.index') }}" class="btn btn-outline">{{ __('messages.view_all_pets') }}</a>
         </div>
 
         <div class="card-grid">
             @forelse($availablePets as $pet)
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <img src="{{ $pet->image_url }}" alt="{{ $pet->name }}" class="card-img">
+                        <img src="{{ $pet->image_url }}" alt="{{ $pet->name }}" class="card-img" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80';">
                         <div class="card-badge">
                             <span class="badge badge-success">{{ ucfirst($pet->species) }}</span>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="card-meta">
-                            <span>Porte: <strong>{{ ucfirst($pet->size) }}</strong></span>
+                            <span>{{ __('messages.size') }}: <strong>{{ ucfirst($pet->size) }}</strong></span>
                             <span>•</span>
-                            <span>{{ $pet->age_years }} anos</span>
+                            <span>{{ $pet->age_years }} {{ __('messages.years') }}</span>
                             <span>•</span>
-                            <span>{{ $pet->gender == 'male' ? 'Macho' : 'Fêmea' }}</span>
+                            <span>{{ $pet->gender == 'male' ? __('messages.male') : __('messages.female') }}</span>
                         </div>
                         <h3 class="card-title"><a href="{{ route('pets.show', $pet) }}">{{ $pet->name }}</a></h3>
                         <p class="card-text">{{ Str::limit($pet->description, 100) }}</p>
                     </div>
                     <div class="card-footer">
                         <span style="font-size:0.85rem; font-weight:600; color:var(--primary);">{{ $pet->breed }}</span>
-                        <a href="{{ route('pets.show', $pet) }}" class="btn btn-primary btn-sm">Conhecer</a>
+                        <a href="{{ route('pets.show', $pet) }}" class="btn btn-primary btn-sm">{{ __('messages.meet_pet') }}</a>
                     </div>
                 </div>
             @empty
-                <p>Nenhum animal disponível no momento.</p>
+                <p>{{ __('messages.no_pets') }}</p>
             @endforelse
         </div>
     </div>
@@ -96,17 +96,17 @@
     <div class="container">
         <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem;">
             <div>
-                <span class="badge badge-accent">Novidades & Campanhas</span>
-                <h2 style="margin-top:0.5rem;">Últimas Notícias do Abrigo</h2>
+                <span class="badge badge-accent">{{ __('messages.news_badge') }}</span>
+                <h2 style="margin-top:0.5rem;">{{ __('messages.latest_news_title') }}</h2>
             </div>
-            <a href="{{ route('news.index') }}" class="btn btn-outline">Ver Todas as Notícias ➔</a>
+            <a href="{{ route('news.index') }}" class="btn btn-outline">{{ __('messages.view_all_news') }}</a>
         </div>
 
         <div class="card-grid">
             @forelse($latestNews as $article)
                 <div class="card">
                     <div class="card-img-wrapper" style="height:180px;">
-                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="card-img">
+                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="card-img" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80';">
                         @if($article->category)
                             <div class="card-badge">
                                 <span class="badge badge-primary">{{ $article->category->name }}</span>
@@ -123,11 +123,11 @@
                         <p class="card-text">{{ Str::limit($article->summary, 110) }}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('news.show', $article->slug) }}" style="font-weight:600; font-size:0.9rem;">Ler artigo completo ➔</a>
+                        <a href="{{ route('news.show', $article->slug) }}" style="font-weight:600; font-size:0.9rem;">{{ __('messages.read_more') }}</a>
                     </div>
                 </div>
             @empty
-                <p>Nenhuma notícia publicada ainda.</p>
+                <p>{{ __('messages.no_news') }}</p>
             @endforelse
         </div>
     </div>

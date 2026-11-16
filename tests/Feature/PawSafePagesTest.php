@@ -113,4 +113,47 @@ class PawSafePagesTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('PawSafe News Article');
     }
+
+    public function test_can_switch_locale_to_english(): void
+    {
+        $response = $this->get('/locale/en');
+        $response->assertRedirect('/');
+        $response->assertSessionHas('locale', 'en');
+
+        $page = $this->withSession(['locale' => 'en'])->get('/');
+        $page->assertStatus(200);
+        $page->assertSee('Adoptable Pets');
+        $page->assertSee('Find a Friend');
+    }
+
+    public function test_can_switch_locale_to_croatian(): void
+    {
+        $response = $this->get('/locale/hr');
+        $response->assertRedirect('/');
+        $response->assertSessionHas('locale', 'hr');
+
+        $page = $this->withSession(['locale' => 'hr'])->get('/');
+        $page->assertStatus(200);
+        $page->assertSee('Ljubimci za Udomljavanje');
+        $page->assertSee('Pronađi Prijatelja');
+    }
+
+    public function test_can_switch_locale_to_portuguese(): void
+    {
+        $response = $this->get('/locale/pt');
+        $response->assertRedirect('/');
+        $response->assertSessionHas('locale', 'pt');
+
+        $page = $this->withSession(['locale' => 'pt'])->get('/');
+        $page->assertStatus(200);
+        $page->assertSee('Animais para Adoção');
+        $page->assertSee('Encontrar um Amigo');
+    }
+
+    public function test_invalid_locale_is_ignored(): void
+    {
+        $response = $this->get('/locale/de');
+        $response->assertRedirect('/');
+        $response->assertSessionMissing('locale');
+    }
 }

@@ -18,9 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'active' => \App\Http\Middleware\CheckActiveUser::class,
         ]);
 
-        // Apply active user check to all web routes
+        // Apply active user check and locale to all web routes
         $middleware->web(append: [
             \App\Http\Middleware\CheckActiveUser::class,
+            \App\Http\Middleware\SetLocale::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
