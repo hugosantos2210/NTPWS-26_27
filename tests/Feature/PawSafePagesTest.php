@@ -73,7 +73,7 @@ class PawSafePagesTest extends TestCase
     {
         $response = $this->get('/about');
         $response->assertStatus(200);
-        $response->assertSee('Missão PawSafe');
+        $response->assertSee('PawSafe');
     }
 
     public function test_news_index_loads(): void
@@ -124,6 +124,11 @@ class PawSafePagesTest extends TestCase
         $page->assertStatus(200);
         $page->assertSee('Adoptable Pets');
         $page->assertSee('Find a Friend');
+
+        $aboutPage = $this->withSession(['locale' => 'en'])->get('/about');
+        $aboutPage->assertStatus(200);
+        $aboutPage->assertSee('PawSafe Mission & Technical Specification');
+        $aboutPage->assertSee('System Objectives');
     }
 
     public function test_can_switch_locale_to_croatian(): void
@@ -136,6 +141,11 @@ class PawSafePagesTest extends TestCase
         $page->assertStatus(200);
         $page->assertSee('Ljubimci za Udomljavanje');
         $page->assertSee('Pronađi Prijatelja');
+
+        $aboutPage = $this->withSession(['locale' => 'hr'])->get('/about');
+        $aboutPage->assertStatus(200);
+        $aboutPage->assertSee('PawSafe Misija i Tehnička Specifikacija');
+        $aboutPage->assertSee('Ciljevi Sustava');
     }
 
     public function test_can_switch_locale_to_portuguese(): void
@@ -148,6 +158,11 @@ class PawSafePagesTest extends TestCase
         $page->assertStatus(200);
         $page->assertSee('Animais para Adoção');
         $page->assertSee('Encontrar um Amigo');
+
+        $aboutPage = $this->withSession(['locale' => 'pt'])->get('/about');
+        $aboutPage->assertStatus(200);
+        $aboutPage->assertSee('Missão PawSafe & Especificação Técnica');
+        $aboutPage->assertSee('Objetivos do Sistema');
     }
 
     public function test_invalid_locale_is_ignored(): void

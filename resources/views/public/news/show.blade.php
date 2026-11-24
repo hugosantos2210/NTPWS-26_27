@@ -7,7 +7,7 @@
 <div class="container" style="padding: 3.5rem 1.5rem;">
     <div style="max-width: 860px; margin: 0 auto;">
         <div style="margin-bottom: 1.5rem;">
-            <a href="{{ route('news.index') }}" style="font-weight: 600; font-size: 0.9rem;">← Voltar às Notícias</a>
+            <a href="{{ route('news.index') }}" style="font-weight: 600; font-size: 0.9rem;">{{ __('messages.back_to_news') }}</a>
         </div>
 
         @if($article->category)
@@ -17,9 +17,9 @@
         <h1 style="font-size: 2.8rem; margin-bottom: 1rem;">{{ $article->title }}</h1>
 
         <div class="card-meta" style="font-size: 0.95rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
-            <span>📅 Publicado em: <strong>{{ $article->published_at ? $article->published_at->format('d/m/Y \à\s H:i') : 'Data não disponível' }}</strong></span>
+            <span>📅 {{ __('messages.published_on') }}: <strong>{{ $article->published_at ? $article->published_at->format('d/m/Y H:i') : '—' }}</strong></span>
             <span>•</span>
-            <span>✍️ Autor: <strong>{{ $article->author->name ?? 'Equipa PawSafe' }}</strong></span>
+            <span>✍️ {{ __('messages.author') }}: <strong>{{ $article->author->name ?? 'PawSafe' }}</strong></span>
         </div>
 
         <div style="margin-bottom: 2.5rem; border-radius: var(--radius-lg); overflow: hidden; max-height: 440px; box-shadow: var(--shadow-md);">
@@ -38,7 +38,7 @@
         <!-- Related News -->
         @if(isset($relatedNews) && $relatedNews->count() > 0)
             <div style="margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--border);">
-                <h3>Notícias Relacionadas</h3>
+                <h3>{{ __('messages.related_news') }}</h3>
                 <div class="card-grid" style="margin-top: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
                     @foreach($relatedNews as $related)
                         <div class="card">
