@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Painel de Administração') — PawSafe CMS</title>
+    <title>@yield('title', __('messages.admin_panel')) — PawSafe CMS</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @stack('styles')
 </head>
@@ -21,34 +21,34 @@
             <ul class="admin-nav">
                 <li class="admin-nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="admin-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <span>📊</span> Painel Geral
+                        <span>📊</span> {{ __('messages.admin_nav_dashboard') }}
                     </a>
                 </li>
                 <li class="admin-nav-item">
                     <a href="{{ route('admin.news.index') }}" class="admin-nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
-                        <span>📰</span> Gestão de Notícias
+                        <span>📰</span> {{ __('messages.admin_nav_news') }}
                     </a>
                 </li>
                 @if(auth()->user()->isAdmin())
                 <li class="admin-nav-item">
                     <a href="{{ route('admin.categories.index') }}" class="admin-nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-                        <span>🏷️</span> Categorias
+                        <span>🏷️</span> {{ __('messages.admin_nav_categories') }}
                     </a>
                 </li>
                 <li class="admin-nav-item">
                     <a href="{{ route('admin.pets.index') }}" class="admin-nav-link {{ request()->routeIs('admin.pets.*') ? 'active' : '' }}">
-                        <span>🐕</span> Animais & Adoções
+                        <span>🐕</span> {{ __('messages.admin_nav_pets') }}
                     </a>
                 </li>
                 <li class="admin-nav-item">
                     <a href="{{ route('admin.users.index') }}" class="admin-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                        <span>👥</span> Utilizadores & Papéis
+                        <span>👥</span> {{ __('messages.admin_nav_users') }}
                     </a>
                 </li>
                 @endif
                 <li class="admin-nav-item" style="margin-top:2rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1rem;">
                     <a href="{{ route('home') }}" class="admin-nav-link" target="_blank">
-                        <span>🌐</span> Ver Site Público ↗
+                        <span>🌐</span> {{ __('messages.admin_nav_view_site') }}
                     </a>
                 </li>
             </ul>
@@ -74,14 +74,14 @@
                     </div>
                 </div>
 
-                <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.5rem;">Sessão iniciada como:</div>
+                <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.5rem;">{{ __('messages.admin_logged_in_as') }}</div>
                 <div style="font-weight:700; color:#fff; font-size:0.95rem;">{{ auth()->user()->name }}</div>
                 <div style="margin-top:0.35rem;">
                     <span class="badge badge-primary">{{ auth()->user()->role->name }}</span>
                 </div>
                 <form action="{{ route('logout') }}" method="POST" style="margin-top:1rem;">
                     @csrf
-                    <button type="submit" class="btn btn-outline btn-sm" style="width:100%; color:var(--danger)!important;">Terminar Sessão</button>
+                    <button type="submit" class="btn btn-outline btn-sm" style="width:100%; color:var(--danger)!important;">{{ __('messages.logout') }}</button>
                 </form>
             </div>
         </aside>

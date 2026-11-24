@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawSafe — Vídeo de Demonstração Completo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --accent: #10b981;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --border-dark: #334155;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-dark);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-icon {
+            font-size: 2rem;
+            background: rgba(37, 99, 235, 0.15);
+            padding: 0.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #60a5fa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border-color: var(--border-dark);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #64748b;
+        }
+
+        /* Main Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Section */
+        .video-card {
+            background: var(--card-dark);
+            border-radius: 16px;
+            border: 1px solid var(--border-dark);
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-wrapper {
+            position: relative;
+            background: #000000;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.6);
+            border-top: 1px solid var(--border-dark);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .video-title h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .video-title p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .badge-live {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .badge-live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        /* Chapters Sidebar */
+        .chapters-card {
+            background: var(--card-dark);
+            border-radius: 16px;
+            border: 1px solid var(--border-dark);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            max-height: 680px;
+        }
+
+        .chapters-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .chapters-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .chapters-header span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .chapters-list {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .chapters-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chapters-list::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        .chapter-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .chapter-item:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateX(2px);
+        }
+
+        .chapter-item.active {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--primary);
+        }
+
+        .chapter-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--primary-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .chapter-content {
+            flex: 1;
+        }
+
+        .chapter-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+        }
+
+        .chapter-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Features Overview Section */
+        .section-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #475569;
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-size: 0.72rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <div class="brand-icon">🐾</div>
+                <div class="brand-text">
+                    <h1>PawSafe Shelter — Demonstração Completa</h1>
+                    <p>Gravação de alta definição de todas as funcionalidades e páginas da aplicação</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="btn btn-outline" target="_blank">🌐 Abrir Website</a>
+                <a href="/admin" class="btn btn-outline" target="_blank">🛡️ Painel Admin</a>
+                <a href="/videos/pawsafe-demo.webm" download="pawsafe-demo.webm" class="btn btn-primary">⬇️ Descarregar Vídeo (.webm)</a>
+            </div>
+        </header>
+
+        <!-- Video Player & Chapters -->
+        <div class="showcase-grid">
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video id="player" controls preload="metadata" poster="">
+                        <source src="videos/pawsafe-demo.webm" type="video/webm">
+                        <source src="/videos/pawsafe-demo.webm" type="video/webm">
+                        O seu navegador não suporta a reprodução deste vídeo. Por favor utilize o botão de download para visualizá-lo.
+                    </video>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">
+                        <h2>Walkthrough Oficial de Funcionalidades & Páginas</h2>
+                        <p>Resolução 1366x768 • Taxa de 25fps • Áudio e HUD descritivo integrado</p>
+                    </div>
+                    <span class="badge-live">Vídeo Disponível</span>
+                </div>
+            </div>
+
+            <!-- Chapters Sidebar -->
+            <div class="chapters-card">
+                <div class="chapters-header">
+                    <h3>Capítulos do Vídeo</h3>
+                    <span>15 Cenas</span>
+                </div>
+                <ul class="chapters-list" id="chaptersList">
+                    <li class="chapter-item active" onclick="seekVideo(0, this)">
+                        <span class="chapter-num">01</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Introdução & Página Inicial (PT)</div>
+                            <div class="chapter-desc">Apresentação do abrigo, estatísticas e animais em destaque (00:00)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(13, this)">
+                        <span class="chapter-num">02</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Multilíngue — Inglês (EN)</div>
+                            <div class="chapter-desc">Alternância instantânea para a versão inglesa completa (00:13)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(20, this)">
+                        <span class="chapter-num">03</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Multilíngue — Croata (HR)</div>
+                            <div class="chapter-desc">Navegação e conteúdos em Hrvatski (00:20)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(28, this)">
+                        <span class="chapter-num">04</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Página "Sobre Nós"</div>
+                            <div class="chapter-desc">História do abrigo, missão, valores, equipa e processo (00:28)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(37, this)">
+                        <span class="chapter-num">05</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Secção de Notícias & Blog</div>
+                            <div class="chapter-desc">Catálogo de artigos com categorias e paginação (00:37)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(44, this)">
+                        <span class="chapter-num">06</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Detalhe da Notícia & API REST</div>
+                            <div class="chapter-desc">Leitura do artigo, metadados e widget de integração (00:44)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(56, this)">
+                        <span class="chapter-num">07</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Catálogo de Adoção & Filtros</div>
+                            <div class="chapter-desc">Filtros dinâmicos por espécie (Cão/Gato), género e porte (00:56)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(68, this)">
+                        <span class="chapter-num">08</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Perfil do Animal & API de Raças</div>
+                            <div class="chapter-desc">Dados ao vivo da TheDogAPI e TheCatAPI com características (01:08)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(80, this)">
+                        <span class="chapter-num">09</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Registo & Login de Utilizador</div>
+                            <div class="chapter-desc">Formulário de registo e autenticação segura de utilizador (01:20)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(93, this)">
+                        <span class="chapter-num">10</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Perfil & Autenticação 2FA (TOTP)</div>
+                            <div class="chapter-desc">QR Code TOTP, chave manual e códigos de recuperação (01:33)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(106, this)">
+                        <span class="chapter-num">11</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Submissão de Candidatura de Adoção</div>
+                            <div class="chapter-desc">Formulário motivacional submetido pelo utilizador autenticado (01:46)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(119, this)">
+                        <span class="chapter-num">12</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Painel Admin — Dashboard</div>
+                            <div class="chapter-desc">Estatísticas gerais, contadores e ações rápidas (01:59)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(132, this)">
+                        <span class="chapter-num">13</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">CMS de Notícias & Editor Quill.js</div>
+                            <div class="chapter-desc">Editor de texto rico WYSIWYG, categorias e upload (02:12)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(147, this)">
+                        <span class="chapter-num">14</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Categorias, Animais & Utilizadores</div>
+                            <div class="chapter-desc">Gestão de categorias, animais, aprovação de pedidos e RBAC (02:27)</div>
+                        </div>
+                    </li>
+                    <li class="chapter-item" onclick="seekVideo(172, this)">
+                        <span class="chapter-num">15</span>
+                        <div class="chapter-content">
+                            <div class="chapter-title">Admin Multilíngue & Conclusão</div>
+                            <div class="chapter-desc">Painel em Inglês e Croata, e ecrã de encerramento (02:52)</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Highlights Section -->
+        <div class="section-header">
+            <h3>Destaques das Funcionalidades Implementadas</h3>
+            <p>Visão geral dos módulos e tecnologias desenvolvidas para o PawSafe Shelter</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h4>Internacionalização Completa (i18n)</h4>
+                <p>O website suporta integralmente 3 idiomas: Português (PT), Inglês (EN) e Croata (HR). A seleção de idioma persiste em sessão e traduz tanto o portal público como o painel administrativo.</p>
+                <div class="feature-tags">
+                    <span class="tag">Português</span>
+                    <span class="tag">English</span>
+                    <span class="tag">Hrvatski</span>
+                    <span class="tag">Admin i18n</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h4>Autenticação de Dois Fatores (2FA)</h4>
+                <p>Segurança reforçada com autenticação TOTP padrão da indústria compatível com Google Authenticator e Microsoft Authenticator, incluindo geração de QR Code e 8 códigos de emergência descartáveis.</p>
+                <div class="feature-tags">
+                    <span class="tag">TOTP</span>
+                    <span class="tag">QR Code</span>
+                    <span class="tag">Recovery Codes</span>
+                    <span class="tag">Google Authenticator</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🐾</div>
+                <h4>APIs REST Externas de Raças</h4>
+                <p>Integração direta com TheDogAPI e TheCatAPI para enriquecer dinamicamente cada página de animal com temperamento, esperança de vida, peso e país de origem da raça.</p>
+                <div class="feature-tags">
+                    <span class="tag">TheDogAPI</span>
+                    <span class="tag">TheCatAPI</span>
+                    <span class="tag">Cache de Raças</span>
+                    <span class="tag">REST Client</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✍️</div>
+                <h4>CMS de Notícias com Quill.js</h4>
+                <p>Sistema de gestão de conteúdos moderno com editor WYSIWYG Quill.js, upload de imagens em destaque, categorização e estados de publicação (rascunho, publicado, retirado).</p>
+                <div class="feature-tags">
+                    <span class="tag">Quill.js</span>
+                    <span class="tag">WYSIWYG</span>
+                    <span class="tag">Categorias</span>
+                    <span class="tag">Uploads</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h4>Fluxo Completo de Adoção</h4>
+                <p>Candidatura de adoção integrada: utilizadores registados podem submeter candidaturas com notas motivacionais e acompanhar o estado em tempo real no seu perfil.</p>
+                <div class="feature-tags">
+                    <span class="tag">Pendente</span>
+                    <span class="tag">Aprovado</span>
+                    <span class="tag">Rejeitado</span>
+                    <span class="tag">Notificações</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h4>Controlo de Acessos RBAC</h4>
+                <p>Níveis de autorização estritos baseados em papéis: Administrador (acesso total), Editor (gestão de notícias e artigos) e Utilizador Registado (adoções e perfil).</p>
+                <div class="feature-tags">
+                    <span class="tag">Admin</span>
+                    <span class="tag">Editor</span>
+                    <span class="tag">User</span>
+                    <span class="tag">Middleware</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>PawSafe Shelter Platform © 2026 — Desenvolvido com Laravel 12 & Tailwind CSS</p>
+        </footer>
+    </div>
+
+    <script>
+        const video = document.getElementById('player');
+        const chapterItems = document.querySelectorAll('.chapter-item');
+
+        function seekVideo(seconds, element) {
+            video.currentTime = seconds;
+            video.play();
+            chapterItems.forEach(item => item.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

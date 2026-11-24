@@ -129,6 +129,12 @@ class PawSafePagesTest extends TestCase
         $aboutPage->assertStatus(200);
         $aboutPage->assertSee('PawSafe Mission & Technical Specification');
         $aboutPage->assertSee('System Objectives');
+
+        $admin = User::first();
+        $adminDashboard = $this->actingAs($admin)->withSession(['locale' => 'en'])->get('/admin');
+        $adminDashboard->assertStatus(200);
+        $adminDashboard->assertSee('Management & Control Dashboard');
+        $adminDashboard->assertSee('News Management');
     }
 
     public function test_can_switch_locale_to_croatian(): void
@@ -146,6 +152,12 @@ class PawSafePagesTest extends TestCase
         $aboutPage->assertStatus(200);
         $aboutPage->assertSee('PawSafe Misija i Tehnička Specifikacija');
         $aboutPage->assertSee('Ciljevi Sustava');
+
+        $admin = User::first();
+        $adminDashboard = $this->actingAs($admin)->withSession(['locale' => 'hr'])->get('/admin');
+        $adminDashboard->assertStatus(200);
+        $adminDashboard->assertSee('Ploča za Upravljanje i Kontrolu');
+        $adminDashboard->assertSee('Upravljanje Vijestima');
     }
 
     public function test_can_switch_locale_to_portuguese(): void
@@ -163,6 +175,12 @@ class PawSafePagesTest extends TestCase
         $aboutPage->assertStatus(200);
         $aboutPage->assertSee('Missão PawSafe & Especificação Técnica');
         $aboutPage->assertSee('Objetivos do Sistema');
+
+        $admin = User::first();
+        $adminDashboard = $this->actingAs($admin)->withSession(['locale' => 'pt'])->get('/admin');
+        $adminDashboard->assertStatus(200);
+        $adminDashboard->assertSee('Painel de Gestão & Controlo');
+        $adminDashboard->assertSee('Gestão de Notícias');
     }
 
     public function test_invalid_locale_is_ignored(): void

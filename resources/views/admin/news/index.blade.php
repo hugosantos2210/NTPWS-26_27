@@ -1,34 +1,34 @@
 @extends('layouts.admin')
 
-@section('title', 'Gestão de Notícias — PawSafe CMS')
+@section('title', __('messages.admin_news_title') . ' — PawSafe CMS')
 
 @section('content')
 <div class="admin-header">
     <div>
-        <h1>Gestão de Notícias & Artigos</h1>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Criação, edição e moderação do catálogo de publicações</p>
+        <h1>{{ __('messages.admin_news_title') }}</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">{{ __('messages.admin_news_desc') }}</p>
     </div>
-    <a href="{{ route('admin.news.create') }}" class="btn btn-primary">➕ Nova Notícia</a>
+    <a href="{{ route('admin.news.create') }}" class="btn btn-primary">➕ {{ __('messages.admin_btn_new_news') }}</a>
 </div>
 
 <!-- Filters -->
 <form action="{{ route('admin.news.index') }}" method="GET" class="filter-bar">
     <div style="flex: 1; min-width: 200px;">
-        <input type="text" name="search" value="{{ $search }}" placeholder="Pesquisar por título ou resumo..." class="form-control">
+        <input type="text" name="search" value="{{ $search }}" placeholder="{{ __('messages.admin_news_search_placeholder') }}" class="form-control">
     </div>
 
     <div style="min-width: 160px;">
         <select name="status" class="form-select">
-            <option value="">Todos os Estados</option>
-            <option value="published" {{ $status == 'published' ? 'selected' : '' }}>Publicado</option>
-            <option value="draft" {{ $status == 'draft' ? 'selected' : '' }}>Rascunho</option>
-            <option value="withdrawn" {{ $status == 'withdrawn' ? 'selected' : '' }}>Retirado</option>
+            <option value="">{{ __('messages.admin_all_statuses') }}</option>
+            <option value="published" {{ $status == 'published' ? 'selected' : '' }}>{{ __('messages.admin_status_published') }}</option>
+            <option value="draft" {{ $status == 'draft' ? 'selected' : '' }}>{{ __('messages.admin_status_draft') }}</option>
+            <option value="withdrawn" {{ $status == 'withdrawn' ? 'selected' : '' }}>{{ __('messages.admin_status_withdrawn') }}</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+    <button type="submit" class="btn btn-primary btn-sm">{{ __('messages.admin_btn_filter') }}</button>
     @if($search || $status)
-        <a href="{{ route('admin.news.index') }}" class="btn btn-outline btn-sm">Limpar</a>
+        <a href="{{ route('admin.news.index') }}" class="btn btn-outline btn-sm">{{ __('messages.admin_btn_clear') }}</a>
     @endif
 </form>
 
@@ -36,12 +36,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Título</th>
-                <th>Categoria</th>
-                <th>Autor</th>
-                <th>Estado</th>
-                <th>Data</th>
-                <th style="text-align: right;">Ações</th>
+                <th>{{ __('messages.admin_th_title') }}</th>
+                <th>{{ __('messages.admin_th_category') }}</th>
+                <th>{{ __('messages.admin_th_author') }}</th>
+                <th>{{ __('messages.admin_th_status') }}</th>
+                <th>{{ __('messages.admin_th_date') }}</th>
+                <th style="text-align: right;">{{ __('messages.admin_th_actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -50,11 +50,11 @@
                     <td style="font-weight: 600;">
                         <a href="{{ route('news.show', $article->slug) }}" target="_blank">{{ $article->title }} ↗</a>
                     </td>
-                    <td>{{ $article->category->name ?? 'Sem categoria' }}</td>
+                    <td>{{ $article->category->name ?? __('messages.admin_general') }}</td>
                     <td>{{ $article->author->name ?? 'N/A' }}</td>
                     <td>
                         <span class="badge {{ $article->status == 'published' ? 'badge-success' : ($article->status == 'draft' ? 'badge-warning' : 'badge-danger') }}">
-                            {{ ucfirst($article->status) }}
+                            {{ __('messages.admin_status_' . $article->status) }}
                         </span>
                     </td>
                     <td style="font-size: 0.85rem; color: var(--text-muted);">
@@ -62,11 +62,11 @@
                     </td>
                     <td style="text-align: right;">
                         <div style="display: inline-flex; gap: 0.35rem;">
-                            <a href="{{ route('admin.news.edit', $article) }}" class="btn btn-outline btn-sm">Editar</a>
-                            <form action="{{ route('admin.news.destroy', $article) }}" method="POST" onsubmit="return confirm('Tem a certeza que deseja eliminar esta notícia?');" style="display:inline;">
+                            <a href="{{ route('admin.news.edit', $article) }}" class="btn btn-outline btn-sm">{{ __('messages.admin_btn_edit') }}</a>
+                            <form action="{{ route('admin.news.destroy', $article) }}" method="POST" onsubmit="return confirm('{{ __('messages.admin_confirm_delete') }}');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Apagar</button>
+                                <button type="submit" class="btn btn-danger btn-sm">{{ __('messages.admin_btn_delete') }}</button>
                             </form>
                         </div>
                     </td>
@@ -74,7 +74,7 @@
             @empty
                 <tr>
                     <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted);">
-                        Nenhuma notícia encontrada.
+                        {{ __('messages.admin_news_empty') }}
                     </td>
                 </tr>
             @endforelse
