@@ -8,16 +8,18 @@ Este documento é a referência técnica integral e detalhada da aplicação **P
 
 1. [Visão Geral & Stack Tecnológica](#1-visão-geral--stack-tecnológica)
 2. [Estrutura de Diretórios e Mapeamento do Código](#2-estrutura-de-diretórios-e-mapeamento-do-código)
-3. [Base de Dados, Esquema Relacional e Modelos Eloquent](#3-base-de-dados-esquema-relacional-e-modelos-eloquent)
-4. [Camada de Serviços (Service Layer) & APIs Externas](#4-camada-de-serviços-service-layer--apis-externas)
-5. [Autenticação, 2FA (TOTP) e Controlo de Acesso Baseado em Papéis (RBAC)](#5-autenticação-2fa-totp-e-controlo-de-acesso-baseado-em-papéis-rbac)
-6. [Controladores e Lógica de Negócio (Controllers Breakdown)](#6-controladores-e-lógica-de-negócio-controllers-breakdown)
-7. [API RESTful Própria (v1) & JSON Schema](#7-api-restful-própria-v1--json-schema)
-8. [Camada de Apresentação (Blade, Quill.js & Multi-Idioma)](#8-camada-de-apresentação-blade-quilljs--multi-idioma)
-9. [Segurança em Profundidade (Defense in Depth)](#9-segurança-em-profundidade-defense-in-depth)
-10. [Testes Automatizados & Qualidade de Software](#10-testes-automatizados--qualidade-de-software)
-11. [Guia de Instalação, Configuração e Execução](#11-guia-de-instalação-configuração-e-execução)
-12. [Perguntas e Respostas para Defesa e Avaliação do Projeto](#12-perguntas-e-respostas-para-defesa-e-avaliação-do-projeto)
+3. [Ciclo de Vida da Requisição HTTP & Mapeamento Completo de Rotas](#3-ciclo-de-vida-da-requisição-http--mapeamento-completo-de-rotas)
+4. [Base de Dados, Esquema Relacional e Modelos Eloquent](#4-base-de-dados-esquema-relacional-e-modelos-eloquent)
+5. [Camada de Serviços (Service Layer) & APIs Externas](#5-camada-de-serviços-service-layer--apis-externas)
+6. [Autenticação, 2FA (TOTP) e Controlo de Acesso Baseado em Papéis (RBAC)](#6-autenticação-2fa-totp-e-controlo-de-acesso-baseado-em-papéis-rbac)
+7. [Controladores e Lógica de Negócio (Controllers Breakdown)](#7-controladores-e-lógica-de-negócio-controllers-breakdown)
+8. [API RESTful Própria (v1) & JSON Schema](#8-api-restful-própria-v1--json-schema)
+9. [Camada de Apresentação (Blade, Quill.js, Vite & Multi-Idioma)](#9-camada-de-apresentação-blade-quilljs-vite--multi-idioma)
+10. [Segurança em Profundidade (Defense in Depth)](#10-segurança-em-profundidade-defense-in-depth)
+11. [Testes Automatizados & Qualidade de Software](#11-testes-automatizados--qualidade-de-software)
+12. [Automação, Vídeo Demonstrativo & Capturas de Ecrã (Playwright)](#12-automação-vídeo-demonstrativo--capturas-de-ecrã-playwright)
+13. [Guia de Instalação, Configuração e Execução](#13-guia-de-instalação-configuração-e-execução)
+14. [Perguntas e Respostas para Defesa e Avaliação do Projeto](#14-perguntas-e-respostas-para-defesa-e-avaliação-do-projeto)
 
 ---
 
@@ -34,16 +36,17 @@ O **PawSafe** resolve o desafio de gestão operacional de um abrigo de animais d
 
 | Componente | Tecnologia | Finalidade / Justificação |
 |---|---|---|
-| **Linguagem Backend** | PHP 8.2+ / 8.4 | Tipagem estrita, constructor property promotion, match expressions e performance. |
-| **Framework Web** | Laravel 11 / 12 | Arquitetura MVC limpa, Eloquent ORM, sistema de migrations, middleware pipeline e rotas declarativas. |
-| **Base de Dados** | SQLite / MySQL / PostgreSQL | Suporte nativo a migrações relacionais com chaves estrangeiras e integridade referencial. |
-| **Frontend / Templates** | Blade Templating Engine | Renderização server-side rápida, herança de layouts, diretivas de controlo e proteção contra XSS via escaping automático. |
+| **Linguagem Backend** | PHP ^8.3 (execução 8.4) | Tipagem estrita, constructor property promotion, match expressions e performance. |
+| **Framework Web** | Laravel ^13.17 | Arquitetura MVC limpa, Eloquent ORM, sistema de migrations, middleware pipeline e rotas declarativas. |
+| **Base de Dados** | SQLite (dev) / MySQL / PostgreSQL | Suporte nativo a migrações relacionais com chaves estrangeiras e integridade referencial. |
+| **Frontend / Templates** | Blade + Tailwind CSS ^4.0 + Vite ^8.0 | Renderização server-side rápida, compilação de assets otimizada, herança de layouts e proteção XSS. |
 | **Editor Rich-Text** | Quill.js v2 (CDN) | Edição WYSIWYG moderna no browser sem necessidade de chaves de API pagas ou registo externo. |
-| **Internacionalização** | Laravel Localization (`lang/`) | Suporte nativo a 3 idiomas completos: Português (`pt`), Inglês (`en`) e Croata (`hr`). |
+| **Internacionalização** | Laravel Localization (`lang/`) | Suporte integral a 3 idiomas com **334 chaves** cada: Português (`pt`), Inglês (`en`) e Croata (`hr`), no portal público e painel Admin. |
 | **APIs Externas** | TheDogAPI & TheCatAPI | Obtenção de fichas biográficas de raças (temperamento, peso, longevidade) e imagens de animais. |
 | **API Externa de Imagem**| Pexels API & Unsplash CDN | Seleção de fotografias profissionais temáticas e contextuais para artigos de notícias. |
 | **Autenticação 2FA** | RFC 6238 / RFC 4226 (TOTP) | Implementação interna de HMAC-SHA1 de 30 segundos sem dependências externas instáveis. |
-| **Suíte de Testes** | PHPUnit / Pest / Laravel Testing | Testes de Feature cobrindo autenticação, autorização, API REST, 2FA e internacionalização. |
+| **Suíte de Testes** | PHPUnit ^12.5 / Laravel Testing | **39 testes** (Feature & Unit) cobrindo autenticação, autorização, API REST, 2FA e internacionalização. |
+| **Automação & Média** | Playwright + FFmpeg | Scripts automatizados para geração de vídeo walkthrough (`pawsafe-demo.webm`) e 6 capturas de ecrã em inglês. |
 
 ---
 
@@ -97,28 +100,118 @@ NTPWS-26_27/
 │   └── seeders/
 │       └── DatabaseSeeder.php                   # Dados completos de teste (contas, notícias, animais)
 ├── lang/
-│   ├── pt/messages.php                          # Dicionário de tradução em Português
-│   ├── en/messages.php                          # Dicionário de tradução em Inglês
-│   └── hr/messages.php                          # Dicionário de tradução em Croata
+│   ├── pt/messages.php                          # Dicionário de tradução em Português (334 chaves)
+│   ├── en/messages.php                          # Dicionário de tradução em Inglês (334 chaves)
+│   └── hr/messages.php                          # Dicionário de tradução em Croata (334 chaves)
 ├── public/
 │   ├── css/style.css                            # Folhas de estilo da aplicação
+│   ├── demo.html                                # Player interativo com capítulos do vídeo de demonstração
 │   ├── images/flags/                            # Bandeiras vetoriais SVG (pt.svg, gb.svg, hr.svg)
-│   └── schemas/
-│       └── news-schema.json                     # JSON Schema oficial para validação de notícias
+│   ├── schemas/
+│   │   └── news-schema.json                     # JSON Schema oficial para validação de notícias
+│   ├── screenshots/                             # 6 capturas de ecrã em alta resolução (versão pública)
+│   └── videos/
+│       └── pawsafe-demo.webm                    # Vídeo HD walkthrough de todas as páginas e funcionalidades
 ├── resources/
-│   └── views/                                   # Vistas Blade estruturadas por módulos
+│   └── views/                                   # Vistas Blade estruturadas por módulos (public, auth, admin)
 ├── routes/
 │   ├── api.php                                  # Rotas da API REST (/api/v1)
 │   └── web.php                                  # Rotas Web (públicas, autenticadas e admin)
+├── screenshots/                                 # Cópia direta das 6 capturas de ecrã em inglês
+├── scripts/
+│   ├── capture_screenshots.cjs                  # Script Playwright para captura automatizada de ecrãs
+│   └── record_demo.cjs                          # Script Playwright para gravação do vídeo com HUD
 └── tests/
-    └── Feature/                                 # 33 testes cobrindo todas as funcionalidades críticas
+    ├── Feature/                                 # 38 testes de funcionalidade (Auth, API, 2FA, Pages)
+    └── Unit/                                    # Testes unitários base
 ```
 
 ---
 
-## 3. Base de Dados, Esquema Relacional e Modelos Eloquent
+## 3. Ciclo de Vida da Requisição HTTP & Mapeamento Completo de Rotas
 
-### 3.1. Esquema Relacional e Diagrama ER
+### 3.1. Pipeline de Execução (`bootstrap/app.php`)
+
+Todas as requisições entram por `public/index.php` e são encaminhadas pelo kernel configurado em [bootstrap/app.php](file:///d:/erasmus/ntp/NTPWS-26_27/bootstrap/app.php):
+
+1. **Registo de Rotas**: Carrega `routes/web.php` (grupo `web`), `routes/api.php` (prefixo `/api`, grupo `api`) e o endpoint de healthcheck `/up`.
+2. **Aliases de Middleware**:
+   - `'role' => CheckRole::class` — Controlo RBAC com parâmetros variádicos (`role:admin,editor`).
+   - `'active' => CheckActiveUser::class` — Validação de estado ativo da conta.
+3. **Middlewares Globais do Grupo `web`**:
+   - `CheckActiveUser` e `SetLocale` são anexados (`append`) a todas as rotas web, garantindo que qualquer página pública ou administrativa respeita o idioma da sessão e desconecta contas desativadas em tempo real.
+4. **Tratamento Unificado de Exceções API**:
+   - `$exceptions->shouldRenderJsonWhen(fn (Request $request) => $request->is('api/*') || $request->expectsJson())` — assegura que erros de validação, 404 ou 401/403 sob `/api/*` devolvem sempre JSON limpo em vez de páginas HTML de erro.
+
+```mermaid
+sequenceDiagram
+    actor U as Utilizador / Cliente
+    participant B as bootstrap/app.php
+    participant MW as Middlewares (CheckActiveUser, SetLocale, CheckRole)
+    participant C as Controller
+    participant S as Service / Eloquent Model
+    participant DB as SQLite / MySQL / API Externa
+
+    U->>B: HTTP Request (Web ou /api/v1/*)
+    B->>MW: Executa pipeline de middlewares
+    alt Conta desativada
+        MW-->>U: Logout imediato + Redirect /login
+    else Papel insuficiente
+        MW-->>U: 403 Forbidden (HTML ou JSON)
+    else Autorizado
+        MW->>C: Encaminha para Ação do Controlador
+        C->>S: Validação + Lógica de Negócio
+        S->>DB: Query Eloquent / Transação / Cache + Http::get()
+        DB-->>S: Dados / Resultado
+        S-->>C: DTO / Modelos hidratados
+        C-->>U: View Blade (HTML escapado) ou JsonResponse
+    end
+```
+
+### 3.2. Mapeamento Integral de Rotas Web (`routes/web.php`)
+
+#### Rotas Públicas (Sem Autenticação)
+| Método | URI | Nome da Rota | Controlador / Ação | Finalidade |
+|---|---|---|---|---|
+| `GET` | `/` | `home` | `HomeController@index` | Página inicial com KPIs, 3 últimas notícias e 6 animais disponíveis. |
+| `GET` | `/about` | `about` | `HomeController@about` | Página institucional sobre a missão, história e equipa do abrigo. |
+| `GET` | `/locale/{locale}` | `locale.change` | `HomeController@changeLocale` | Altera o idioma na sessão (`pt`, `en`, `hr`) com `fallback: route('home')`. |
+| `GET` | `/news` | `news.index` | `NewsController@index` | Listagem paginada de notícias publicadas, filtros por categoria e pesquisa. |
+| `GET` | `/news/{slug}` | `news.show` | `NewsController@show` | Leitura integral de artigo publicado + artigos relacionados. |
+| `GET` | `/pets` | `pets.index` | `PetController@index` | Catálogo de animais para adoção com filtros por espécie, porte e género. |
+| `GET` | `/pets/{pet}` | `pets.show` | `PetController@show` | Ficha detalhada do animal + dados de raça via `BreedService` (TheDogAPI/TheCatAPI). |
+
+#### Rotas de Autenticação & 2FA (`guest` e `auth`)
+| Método | URI | Middleware | Nome da Rota | Controlador / Ação |
+|---|---|---|---|---|
+| `GET` / `POST` | `/register` | `guest` | `register` | `AuthController@showRegister` / `register` (força sempre `Role::USER`). |
+| `GET` / `POST` | `/login` | `guest` | `login` | `AuthController@showLogin` / `login` (interceta para 2FA se ativo). |
+| `GET` / `POST` | `/two-factor-challenge` | `guest` | `two-factor.challenge` | `TwoFactorController@showChallenge` / `verifyChallenge` (TOTP ou recovery code). |
+| `POST` | `/logout` | `auth` | `logout` | `AuthController@logout` (invalida sessão e regenera CSRF token). |
+| `GET` | `/profile` | `auth` | `profile` | `ProfileController@show` (dados, avatar, 2FA status e histórico de adoções). |
+| `PUT` | `/profile` | `auth` | `profile.update` | `ProfileController@update` (edita dados pessoais e upload de avatar). |
+| `PUT` | `/profile/password` | `auth` | `profile.password` | `ProfileController@changePassword` (verifica senha atual antes de alterar). |
+| `GET` | `/two-factor-setup` | `auth` | `two-factor.setup` | `TwoFactorController@showSetup` (gera segredo Base32, QR Code e 8 códigos). |
+| `POST` | `/two-factor/confirm` | `auth` | `two-factor.confirm` | `TwoFactorController@confirm` (valida o primeiro código TOTP e ativa 2FA). |
+| `POST` | `/two-factor/disable` | `auth` | `two-factor.disable` | `TwoFactorController@disable` (exige palavra-passe atual). |
+| `POST` | `/two-factor/recovery-codes` | `auth` | `two-factor.recovery-codes` | `TwoFactorController@regenerateRecoveryCodes` (gera novos 8 códigos). |
+| `POST` | `/pets/{pet}/adopt` | `auth` | `pets.adopt` | `PetController@submitAdoption` (submete candidatura única de adoção). |
+
+#### Rotas Administrativas (`/admin` — Middleware `auth`, `role:admin,editor`)
+| Prefixo / URI | Middleware Extra | Nome Base | Controlador | Permissões |
+|---|---|---|---|---|
+| `GET /admin` | `role:admin,editor` | `admin.dashboard` | `DashboardController@index` | Editores veem vista limitada; Admins veem KPIs globais e adoções. |
+| `Resource /admin/news` | `role:admin,editor` | `admin.news.*` | `AdminNewsController` | Editores gerem apenas as **suas** notícias; Admins gerem todas. |
+| `Resource /admin/categories` | `role:admin` | `admin.categories.*` | `AdminCategoryController` | Exclusivo Admin; impede apagar categorias com notícias. |
+| `Resource /admin/pets` | `role:admin` | `admin.pets.*` | `AdminPetController` | Exclusivo Admin; CRUD completo de animais e fotos. |
+| `PATCH /admin/adoption-requests/{adoptionRequest}` | `role:admin` | `admin.adoption-requests.update` | `AdminPetController@updateAdoptionRequest` | Exclusivo Admin; aprova/rejeita pedidos em `DB::transaction()`. |
+| `GET /admin/users`, `edit`, `update` | `role:admin` | `admin.users.*` | `AdminUserController` | Exclusivo Admin; altera `role_id` e `is_active` com expurgo de sessões. |
+
+---
+
+## 4. Base de Dados, Esquema Relacional e Modelos Eloquent
+
+### 4.1. Esquema Relacional e Diagrama ER
 
 A base de dados é estritamente relacional, cumprindo os padrões de integridade referencial e normalização (3FN).
 
@@ -211,7 +304,7 @@ erDiagram
     }
 ```
 
-### 3.2. Análise Detalhada das Migrações (`database/migrations/`)
+### 4.2. Análise Detalhada das Migrações (`database/migrations/`)
 
 1. [0001_01_01_000000_create_users_table.php](file:///d:/erasmus/ntp/NTPWS-26_27/database/migrations/0001_01_01_000000_create_users_table.php):
    - Cria a tabela `roles` com índice de unicidade em `name`.
@@ -234,7 +327,7 @@ erDiagram
 7. [2024_01_02_000006_add_two_factor_columns_to_users_table.php](file:///d:/erasmus/ntp/NTPWS-26_27/database/migrations/2024_01_02_000006_add_two_factor_columns_to_users_table.php):
    - Adiciona colunas para 2FA: `two_factor_secret`, `two_factor_recovery_codes` (array em JSON) e `two_factor_confirmed_at`.
 
-### 3.3. Análise Exaustiva dos Modelos Eloquent (`app/Models/`)
+### 4.3. Análise Exaustiva dos Modelos Eloquent (`app/Models/`)
 
 #### 1. `User` ([app/Models/User.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Models/User.php))
 - **Herança**: `Illuminate\Foundation\Auth\User as Authenticatable`.
@@ -311,11 +404,11 @@ erDiagram
 
 ---
 
-## 4. Camada de Serviços (Service Layer) & APIs Externas
+## 5. Camada de Serviços (Service Layer) & APIs Externas
 
 Para respeitar o princípio da responsabilidade única (SRP) e manter os controladores limpos, todas as operações complexas e chamadas de rede externas foram abstraídas em serviços dentro de `app/Services/`.
 
-### 4.1. `TotpService` ([app/Services/TotpService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/TotpService.php))
+### 5.1. `TotpService` ([app/Services/TotpService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/TotpService.php))
 
 Implementação pura em PHP dos padrões **RFC 4226 (HOTP)** e **RFC 6238 (TOTP)**, sem recurso a bibliotecas externas pesadas ou instáveis:
 
@@ -337,40 +430,82 @@ Implementação pura em PHP dos padrões **RFC 4226 (HOTP)** e **RFC 6238 (TOTP)
    - Gera a URI padrão `otpauth://totp/PawSafe:email?secret=...&issuer=PawSafe&algorithm=SHA1&digits=6&period=30`.
    - Gera o URL de imagem QR Code através da API pública segura `api.qrserver.com`.
 
-### 4.2. `BreedService` ([app/Services/BreedService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/BreedService.php))
+### 5.2. Configuração Centralizada de APIs Externas (`config/services.php`)
 
-Responsável por enriquecer as fichas de animais públicos com dados científicos e comportamentais da respetiva raça:
+Todas as credenciais e URLs base das APIs de terceiros são geridas exclusivamente no servidor através de [config/services.php](file:///d:/erasmus/ntp/NTPWS-26_27/config/services.php), lendo variáveis de ambiente do `.env` (nunca expostas no código cliente JavaScript ou no repositório Git):
 
-- **Estratégia Cache-First (Resiliência)**:
-  1. Primeiro verifica se a raça já existe na tabela `breed_cache`.
-  2. Se existir e os dados tiverem menos de 24 horas (`!$cached->isStale()`), retorna de imediato os dados com `source: 'cache'`.
-  3. Se não existir ou estiver desatualizado, realiza uma chamada HTTP segura com timeout estrito de 10 segundos (`Http::timeout(10)`) a **TheDogAPI** (`api.thedogapi.com/v1/breeds/search`) para cães ou **TheCatAPI** (`api.thecatapi.com/v1/breeds/search`) para gatos.
-  4. Extrai temperamento, esperança de vida, peso métrico, altura e obtém a fotografia de referência da raça.
-  5. Atualiza a tabela `breed_cache` na base de dados com `updateOrCreate()`.
-- **Degradação Graciosa (Graceful Degradation)**:
-  - Se a API externa estiver em baixo, apresentar erro HTTP 5xx ou exceder o timeout, o serviço captura a exceção em bloco `try/catch`, regista um aviso no log do Laravel e **devolve os dados expirados em cache**, marcando a origem como `'cache (stale - API unavailable)'`. O utilizador nunca vê um ecrã de erro.
+| Serviço | Variável `.env` | URL Base | Cabeçalho de Autenticação | Utilizado por |
+|---|---|---|---|---|
+| **TheDogAPI** | `DOG_API_KEY` | `https://api.thedogapi.com/v1` | `x-api-key` | `BreedService`, `PetImageService` |
+| **TheCatAPI** | `CAT_API_KEY` | `https://api.thecatapi.com/v1` | `x-api-key` | `BreedService`, `PetImageService` |
+| **Pexels API** | `PEXELS_API_KEY` | `https://api.pexels.com/v1` | `Authorization` | `NewsImageService` |
+| **QR Server** | *(Pública)* | `https://api.qrserver.com/v1/create-qr-code/` | — | `TotpService` |
 
-### 4.3. `NewsImageService` ([app/Services/NewsImageService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/NewsImageService.php))
+### 5.3. `BreedService` ([app/Services/BreedService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/BreedService.php))
 
-Garante que todos os artigos de notícias tenham uma fotografia de cabeçalho profissional e contextualmente relevante:
+Responsável por enriquecer a ficha de cada animal (`PetController@show` → `resources/views/public/pets/show.blade.php`) com dados científicos e comportamentais da respetiva raça através das APIs **TheDogAPI** e **TheCatAPI**:
 
-- **Mapeamento Semântico de Categorias**:
-  - `adoption-stories` ➔ `"happy pet family adoption"`
-  - `health-care` ➔ `"veterinary pet health care"`
-  - `events` ➔ `"pet community event outdoor"`
-  - `volunteer` ➔ `"volunteer animal shelter helping"`
-  - `tips-training` ➔ `"dog training pet obedience"`
-- **Pesquisa via Pexels API**: Se configurada a chave `PEXELS_API_KEY`, pesquisa na API da Pexels e armazena em cache durante 7 dias (168 horas) com `Cache::remember`.
-- **Algoritmo de Variedade Determinística**: Para evitar que artigos da mesma categoria mostrem sempre a mesma imagem, calcula o índice da imagem através de `$articleId % count($photos)`. O mesmo artigo terá sempre a mesma foto consistente, mas artigos distintos terão fotos diferentes.
-- **Fallback Temático Curado Unsplash**: Se a API falhar ou não houver chave configurada, recorre a uma galeria de imagens temáticas de alta resolução pré-selecionadas no Unsplash.
+```mermaid
+flowchart TD
+    A["getBreedInfo(species, breedName)"] --> B{"Existe em breed_cache?"}
+    B -- "Sim e < 24h (!isStale)" --> C["Retorna cache ('source' => 'cache')"]
+    B -- "Não existe ou >= 24h" --> D["Http::timeout(10)->get('/breeds/search?q=...')"]
+    D -- "HTTP 200 & JSON válido" --> E{"Tem reference_image_id?"}
+    E -- Sim --> F["Http::timeout(10)->get('/images/{id}')"]
+    E -- Não --> G["Usa image.url se existir"]
+    F --> H["BreedCache::updateOrCreate()"]
+    G --> H
+    H --> I["Retorna dados ('source' => 'api')"]
+    D -- "Timeout / Erro HTTP / Exception" --> J{"Existe cache expirado?"}
+    J -- Sim --> K["Log::warning() + Retorna cache stale ('source' => 'cache (stale - API unavailable)')"]
+    J -- Não --> L["Retorna null (Vista exibe mensagem neutra)"]
+```
 
-### 4.4. `PetImageService` ([app/Services/PetImageService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/PetImageService.php))
+- **Estratégia Cache-First (`CACHE_HOURS = 24`)**:
+  1. Consulta `BreedCache::where('species', $species)->where('breed_name', $breedName)->first()`.
+  2. Se existir e `fetched_at` tiver menos de 24 horas (`!$cached->isStale()`), devolve imediatamente `data_json`, `image_url`, `fetched_at` e `source: 'cache'`.
+- **Comunicação HTTP & Extração Estruturada (`fetchFromApi`)**:
+  - Seleciona o endpoint base consoante a espécie (`DOG_API_URL` ou `CAT_API_URL`) e injeta o header `x-api-key` se configurado.
+  - Executa `GET /breeds/search?q={breedName}` com `TIMEOUT_SECONDS = 10`.
+  - Valida o payload (`isset($breed['name'])`) e normaliza os campos: `name`, `temperament`, `life_span`, `weight` (preferência por métrico), `height`, `bred_for`, `breed_group`, `origin` e `description`.
+  - Caso exista `reference_image_id`, realiza uma segunda chamada `GET /images/{reference_image_id}` para obter o URL oficial da foto de referência.
+  - Persiste ou atualiza o registo em `breed_cache` com `updateOrCreate()`.
+- **Degradação Graciosa & Simulação**:
+  - Em caso de falha de rede ou erro HTTP (status não-2xx lança `RuntimeException`), o bloco `catch` regista `Log::warning(...)` e devolve os dados expirados da base de dados com `source: 'cache (stale - API unavailable)'`.
+  - Inclui ainda `getCachedBreeds(species)` para consulta de raças já em cache e `simulateFailure(species, breedName)` para demonstração de tratamento de falhas.
 
-Segue o mesmo padrão de excelência: resolve imagens oficiais da raça do animal via TheDogAPI/TheCatAPI e mantém em cache por 7 dias. Na ausência de correspondência de raça, recorre a fotografias de estúdio curadas do Unsplash indexadas por espécie.
+### 5.4. `NewsImageService` ([app/Services/NewsImageService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/NewsImageService.php))
+
+Garante que todos os artigos de notícias sem fotografia manual tenham uma imagem de cabeçalho profissional e contextualmente relevante, com cache de **7 dias (`CACHE_HOURS = 168`)** sob a chave `"news_image_{$articleId}"`:
+
+- **Mapeamento Semântico & Construção de Query (`buildSearchQuery`)**:
+  - Se a categoria pertencer ao mapa predefinido, usa palavras-chave otimizadas:
+    - `adoption-stories` ➔ `"happy pet family adoption"`
+    - `health-care` ➔ `"veterinary pet health care"`
+    - `events` ➔ `"pet community event outdoor"`
+    - `volunteer` ➔ `"volunteer animal shelter helping"`
+    - `tips-training` ➔ `"dog training pet obedience"`
+  - Caso contrário, extrai até 3 palavras com $\ge 4$ caracteres do título do artigo e concatena `" pet animal"`, usando `"animal shelter pet care"` como último recurso.
+- **Integração Pexels API (`fetchFromPexels`)**:
+  - Se `config('services.pexels.key')` estiver definida, envia `GET https://api.pexels.com/v1/search` com header `Authorization: {apiKey}`, `TIMEOUT_SECONDS = 8`, `per_page = 15` e `orientation = landscape`.
+- **Variedade Determinística & Fallback Unsplash**:
+  - Seleciona a fotografia através de `$articleId % count($photos)`, garantindo que o mesmo artigo mantém sempre a mesma imagem, mas artigos distintos da mesma categoria recebem fotos diferentes.
+  - Se a Pexels API não tiver chave configurada, falhar ou não devolver resultados, recorre às coleções curadas de URLs do Unsplash organizadas por categoria (`getFallbackUrl()`).
+
+### 5.5. `PetImageService` ([app/Services/PetImageService.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Services/PetImageService.php))
+
+Resolve fotografias específicas da raça de cada animal através das APIs **TheDogAPI** / **TheCatAPI**, minimizando chamadas com dois níveis de cache:
+
+1. **Cache de Imagem do Animal (`CACHE_HOURS = 168`, 7 dias)**:
+   - Chave `"pet_image_{$petId}_{$species}_" . md5($breed ?? 'unknown')`.
+2. **Pipeline de Resolução em 3 Níveis (`fetchFromApi`)**:
+   - **Nível 1 (Por Raça):** Invoca `findBreedId()`, que pesquisa `GET /breeds/search?q={breedName}` (com timeout de 8s) e guarda o ID da raça em cache durante **30 dias (`addDays(30)`)** sob a chave `"breed_id_" . md5($baseUrl . $breedName)`. Com o `breedId`, consulta `GET /images/search?breed_ids={id}&limit=10&size=med` e seleciona `$images[$petId % count($images)]['url']`.
+   - **Nível 2 (Por Espécie):** Se a raça não for encontrada, consulta `GET /images/search?limit=1&size=med` para obter uma imagem da respetiva espécie.
+   - **Nível 3 (Fallback Curado Unsplash):** Em caso de exceção ou indisponibilidade da API, seleciona deterministicamente uma foto de reserva (`$dogPhotos` ou `$catPhotos`) por `$petId % count($photos)`.
 
 ---
 
-## 5. Autenticação, 2FA (TOTP) e Controlo de Acesso Baseado em Papéis (RBAC)
+## 6. Autenticação, 2FA (TOTP) e Controlo de Acesso Baseado em Papéis (RBAC)
 
 O PawSafe implementa um sistema de segurança multicamada (Defense in Depth).
 
@@ -391,7 +526,7 @@ flowchart TD
     I -- admin --> L
 ```
 
-### 5.1. Matriz de Controlo de Acessos (RBAC)
+### 6.1. Matriz de Controlo de Acessos (RBAC)
 
 O sistema distingue explicitamente 4 níveis de privilégio:
 
@@ -411,7 +546,7 @@ O sistema distingue explicitamente 4 níveis de privilégio:
 | Decidir Pedidos de Adoção | Não | Não | Não (403) | Sim |
 | Gerir Utilizadores, Papéis e Ativações | Não | Não | Não (403) | Sim |
 
-### 5.2. Análise dos Middlewares de Segurança
+### 6.2. Análise dos Middlewares de Segurança
 
 #### 1. `CheckRole` ([app/Http/Middleware/CheckRole.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Middleware/CheckRole.php))
 - **Parâmetros Variádicos**: Aceita múltiplos papéis na declaração de rota: `middleware('role:admin,editor')`.
@@ -427,7 +562,7 @@ O sistema distingue explicitamente 4 níveis de privilégio:
 #### 3. `SetLocale` ([app/Http/Middleware/SetLocale.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Middleware/SetLocale.php))
 - Inspeciona a variável de sessão `locale`. Se corresponder a um dos idiomas permitidos (`pt`, `en`, `hr`), define o locale da aplicação através de `App::setLocale($locale)`. Caso contrário, adota o valor por omissão (`pt`).
 
-### 5.3. Fluxo de Registo, Login e 2FA
+### 6.3. Fluxo de Registo, Login e 2FA
 
 1. **Registo (`AuthController::register`)**:
    - Valida unicidade de email e força de palavra-passe com confirmação (`confirmed`).
@@ -442,11 +577,39 @@ O sistema distingue explicitamente 4 níveis de privilégio:
    - Permite a validação através do código de 6 dígitos TOTP ou de um código de recuperação de emergência (`recovery_code`).
    - Se for usado um código de recuperação: normaliza o código (remove espaços e converte para maiúsculas), localiza o código no array `$user->two_factor_recovery_codes`, remove-o do array (invalidação de uso único), grava o utilizador na base de dados e conclui a autenticação.
 
+```mermaid
+sequenceDiagram
+    actor U as Utilizador
+    participant AC as AuthController
+    participant TFC as TwoFactorController
+    participant TS as TotpService
+    participant S as Session / DB
+
+    U->>AC: POST /login (email, password)
+    AC->>S: Auth::validate() & verifica is_active
+    alt 2FA Ativa
+        AC->>S: Guarda 2fa:user_id e 2fa:remember
+        AC-->>U: Redirect /two-factor-challenge
+        U->>TFC: POST /two-factor-challenge (code ou recovery_code)
+        alt Código TOTP 6 dígitos
+            TFC->>TS: verify(secret, code, window=1)
+            TS-->>TFC: true (hash_equals constante)
+        else Código de Recuperação
+            TFC->>S: Valida e remove código único de two_factor_recovery_codes
+        end
+        TFC->>S: Auth::loginUsingId() + session()->regenerate()
+        TFC-->>U: Redirect / (Autenticado)
+    else Sem 2FA
+        AC->>S: Auth::login() + session()->regenerate()
+        AC-->>U: Redirect /
+    end
+```
+
 ---
 
-## 6. Controladores e Lógica de Negócio (Controllers Breakdown)
+## 7. Controladores e Lógica de Negócio (Controllers Breakdown)
 
-### 6.1. Controladores Públicos
+### 7.1. Controladores Públicos
 
 #### `HomeController` ([app/Http/Controllers/HomeController.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Controllers/HomeController.php))
 - `index()`: Carrega as 3 notícias publicadas mais recentes com eager loading das relações (`with(['category', 'author'])`), os 6 animais disponíveis mais recentes e agrega contadores estatísticos em tempo real (total de animais, adotados e disponíveis).
@@ -482,7 +645,7 @@ O sistema distingue explicitamente 4 níveis de privilégio:
 - `update()`: Atualização de nome, email e número de telefone. Suporta upload de avatar com validação estrita de imagem (JPEG, PNG, WEBP até 2MB) e eliminação automática do ficheiro de avatar antigo do disco (`Storage::delete`).
 - `changePassword()`: Validação da senha atual com `Hash::check` antes de permitir a substituição pela nova senha.
 
-### 6.2. Controladores Administrativos (`app/Http/Controllers/Admin/`)
+### 7.2. Controladores Administrativos (`app/Http/Controllers/Admin/`)
 
 #### `DashboardController` ([app/Http/Controllers/Admin/DashboardController.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Controllers/Admin/DashboardController.php))
 - Agrega métricas globais para a equipa: utilizadores ativos, total de notícias, rascunhos pendentes, animais adotados, animais aguardando família e pedidos de adoção pendentes de triagem.
@@ -537,40 +700,59 @@ O sistema distingue explicitamente 4 níveis de privilégio:
 
 ---
 
-## 7. API RESTful Própria (v1) & JSON Schema
+## 8. API RESTful Própria (v1) & JSON Schema
 
-A aplicação expõe uma API RESTful completa sob o prefixo `/api/v1` implementada em [ApiNewsController.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Controllers/Api/ApiNewsController.php).
+A aplicação expõe uma API RESTful versionada sob o prefixo `/api/v1`, definida em [routes/api.php](file:///d:/erasmus/ntp/NTPWS-26_27/routes/api.php) e implementada em [ApiNewsController.php](file:///d:/erasmus/ntp/NTPWS-26_27/app/Http/Controllers/Api/ApiNewsController.php).
 
-### 7.1. Especificação dos Endpoints
+### 8.1. Especificação e Arquitetura dos Endpoints
 
-| Método | Endpoint | Proteção / Permissões | Resposta Sucesso | Códigos de Erro Possíveis | Descrição |
+| Método | Endpoint | Proteção / Middleware | Resposta Sucesso | Códigos de Erro | Regras e Comportamento |
 |---|---|---|:---:|:---:|---|
-| `GET` | `/api/v1/news` | Pública | `200 OK` | `400` | Lista notícias publicadas com paginação e filtros (`category_id`, `search`, `per_page`). |
-| `GET` | `/api/v1/news/{id}` | Pública | `200 OK` | `404` | Devolve o detalhe de uma notícia publicada. Rascunhos devolvem `404 Not Found`. |
-| `GET` | `/api/v1/categories` | Pública | `200 OK` | — | Lista todas as categorias com a contagem de notícias publicadas associadas. |
-| `GET` | `/api/v1/schema` | Pública | `200 OK` | — | Devolve a especificação JSON Schema formal das notícias (`application/schema+json`). |
-| `POST` | `/api/v1/news` | `auth` + `role:editor,admin` | `201 Created` | `400, 401, 403` | Criação programática de uma notícia. Sanitiza o HTML antes de persistir. |
-| `PATCH` | `/api/v1/news/{id}` | `auth` + `role:editor,admin` | `200 OK` | `400, 401, 403, 404` | Atualização parcial. Editores só podem atualizar os seus próprios artigos. |
-| `DELETE` | `/api/v1/news/{id}` | `auth` + `role:editor,admin` | `204 No Content` | `401, 403, 404` | Elimina a notícia. Resposta sem corpo de dados (RFC 7231). |
+| `GET` | `/api/v1/news` | Pública | `200 OK` | `400` | Lista notícias `published()` ordenadas por `published_at DESC`. Aceita `category_id`, `search` (`title`/`summary`) e `per_page` (máx. `50`, default `10`). |
+| `GET` | `/api/v1/news/{id}` | Pública | `200 OK` | `404` | Devolve o detalhe de uma notícia publicada com relações `category` e `author:id,name`. Rascunhos/retiradas devolvem `404`. |
+| `GET` | `/api/v1/categories` | Pública | `200 OK` | — | Lista todas as categorias ordenadas por `name`, com `news_count` contando apenas artigos `published()`. |
+| `GET` | `/api/v1/schema` | Pública | `200 OK` | — | Serve `public/schemas/news-schema.json` com header `Content-Type: application/schema+json`. |
+| `POST` | `/api/v1/news` | `auth` + `role:editor,admin` | `201 Created` | `400, 401, 403` | Valida campos obrigatórios, gera slug (`Str::slug($title).'-'.Str::random(5)`), higieniza HTML via `strip_tags()`, define `author_id` e `published_at`. |
+| `PATCH` | `/api/v1/news/{id}` | `auth` + `role:editor,admin` | `200 OK` | `400, 401, 403, 404` | Atualização parcial (`sometimes`). Editores só alteram os seus próprios artigos (BOLA check); suporta `status` `draft`/`published`/`withdrawn`. |
+| `DELETE` | `/api/v1/news/{id}` | `auth` + `role:editor,admin` | `204 No Content` | `401, 403, 404` | Verifica autoria (editores só apagam próprios artigos) e devolve `response()->noContent()` sem corpo HTTP. |
 
-### 7.2. Semântica HTTP e Formato de Resposta
+### 8.2. Exemplos de Requisições e Semântica HTTP
 
-- **Sucesso com Dados (200 / 201)**:
+- **Listagem Paginada (`GET /api/v1/news?category_id=1&per_page=3`) — `200 OK`**:
   ```json
   {
     "success": true,
-    "data": { ... },
+    "data": [
+      {
+        "id": 1,
+        "title": "Max Found His Forever Home!",
+        "slug": "max-found-his-forever-home",
+        "summary": "...",
+        "status": "published",
+        "published_at": "2026-11-24T12:00:00.000000Z",
+        "category": { "id": 1, "name": "Adoption Stories", "slug": "adoption-stories" },
+        "author": { "id": 2, "name": "Maria Santos" }
+      }
+    ],
     "meta": {
       "current_page": 1,
-      "per_page": 10,
-      "total": 25,
-      "last_page": 3
+      "per_page": 3,
+      "total": 6,
+      "last_page": 2
     }
   }
   ```
-- **Sucesso Sem Conteúdo (204 No Content)**:
-  - Produzido por `response()->noContent()`. Sem qualquer cabeçalho de corpo ou bytes transmitidos, em estrita conformidade com os requisitos da disciplina.
-- **Erros de Validação (400 Bad Request)**:
+- **Criação de Artigo (`POST /api/v1/news`) — `201 Created`**:
+  ```bash
+  curl -X POST http://127.0.0.1:8000/api/v1/news \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Campanha de Adoção","summary":"Resumo do evento...","content":"<p>Texto rico</p>","category_id":1,"status":"published"}'
+  ```
+- **Sucesso Sem Conteúdo (`DELETE /api/v1/news/{id}`) — `204 No Content`**:
+  - Produzido por `response()->noContent()`. Sem qualquer cabeçalho de corpo ou bytes transmitidos, em estrita conformidade com a RFC 7231.
+- **Erros de Validação (`400 Bad Request`)**:
+  - O `ApiNewsController` utiliza `Validator::make()` explícito em vez do `validate()` padrão do Laravel para retornar código **400** (em vez de 422) com o envelope JSON padronizado:
   ```json
   {
     "success": false,
@@ -581,7 +763,8 @@ A aplicação expõe uma API RESTful completa sob o prefixo `/api/v1` implementa
     }
   }
   ```
-- **Acesso Não Autorizado (403 Forbidden)**:
+- **Acesso Não Autorizado (`401 Unauthorized` / `403 Forbidden`)**:
+  - Se não autenticado, o `bootstrap/app.php` (via `shouldRenderJsonWhen`) e `CheckRole` devolvem `401` em JSON. Se um editor tentar modificar artigo de outro autor, devolve `403`:
   ```json
   {
     "success": false,
@@ -589,9 +772,9 @@ A aplicação expõe uma API RESTful completa sob o prefixo `/api/v1` implementa
   }
   ```
 
-### 7.3. Especificação JSON Schema (`public/schemas/news-schema.json`)
+### 8.3. Especificação JSON Schema (`public/schemas/news-schema.json`)
 
-O ficheiro [news-schema.json](file:///d:/erasmus/ntp/NTPWS-26_27/public/schemas/news-schema.json) define formalmente a estrutura de validação com base no padrão JSON Schema Draft 2020-12:
+O ficheiro [news-schema.json](file:///d:/erasmus/ntp/NTPWS-26_27/public/schemas/news-schema.json) define formalmente a estrutura de validação com base no padrão **JSON Schema Draft 2020-12** (incluindo os objetos aninhados opcionais `category` e `author` e `additionalProperties: false`):
 
 ```json
 {
@@ -606,6 +789,8 @@ O ficheiro [news-schema.json](file:///d:/erasmus/ntp/NTPWS-26_27/public/schemas/
     "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
     "summary": { "type": "string", "minLength": 10, "maxLength": 300 },
     "content": { "type": "string", "minLength": 20 },
+    "category": { "type": ["object", "null"], "required": ["id", "name", "slug"] },
+    "author": { "type": ["object", "null"], "required": ["id", "name"] },
     "status": { "type": "string", "enum": ["draft", "published", "withdrawn"] },
     "image_url": { "type": ["string", "null"], "format": "uri" },
     "published_at": { "type": ["string", "null"], "format": "date-time" }
@@ -614,17 +799,22 @@ O ficheiro [news-schema.json](file:///d:/erasmus/ntp/NTPWS-26_27/public/schemas/
 }
 ```
 
-### 7.4. Consumo Real da Própria API na Aplicação
+### 8.4. Consumo Real da Própria API na Aplicação
 
 O enunciado exige expressamente que *"pelo menos uma parte da aplicação deve usar a sua própria API"*.
 
-Esta funcionalidade está implementada no componente visual de notícias em [resources/views/public/news/index.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/public/news/index.blade.php). A página contém uma secção autónoma intitulada **"⚡ Carregado via API REST"**, onde um script JavaScript nativo (`fetch`) consome o endpoint `/api/v1/news?per_page=3`, analisa a resposta JSON recebida e constrói dinamicamente os cartões no DOM com imagem, título, data e link para leitura.
+Esta funcionalidade está implementada em [resources/views/public/news/index.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/public/news/index.blade.php), dentro do contentor `#api-news-widget`:
+
+1. **Estado Inicial**: Exibe um spinner animado com a mensagem traduzida `__('messages.api_loading')`.
+2. **Requisição Assíncrona**: Um script JavaScript nativo executa `fetch('/api/v1/news?per_page=3')`, verifica `if (!res.ok) throw new Error('HTTP ' + res.status)` e converte a resposta com `res.json()`.
+3. **Renderização Dinâmica no DOM**: Itera sobre `json.data`, formata `published_at` com `toLocaleDateString('pt-PT')`, cria ligações para `/news/{slug}` com o badge da categoria e substitui o spinner no DOM.
+4. **Tratamento de Erro no Cliente**: O bloco `.catch()` apresenta uma mensagem de erro legível caso a chamada falhe.
 
 ---
 
-## 8. Camada de Apresentação (Blade, Quill.js & Multi-Idioma)
+## 9. Camada de Apresentação (Blade, Quill.js, Vite & Multi-Idioma)
 
-### 8.1. Layouts Mestres
+### 9.1. Layouts Mestres
 
 - **Layout Público** ([resources/views/layouts/app.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/layouts/app.blade.php)):
   - Barra de navegação responsiva com links para Início, Notícias, Animais, Sobre e API REST.
@@ -633,38 +823,36 @@ Esta funcionalidade está implementada no componente visual de notícias em [res
   - Contentor de mensagens flash de sucesso, aviso e erro com animações visuais.
   - Rodapé em 4 colunas com links diretos para a documentação da API e JSON Schema.
 - **Layout Administrativo** ([resources/views/layouts/admin.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/layouts/admin.blade.php)):
-  - Barra lateral (Sidebar) com navegação dedicada para Dashboard, Notícias, Categorias, Animais, Utilizadores e atalho para o site público.
+  - Barra lateral (Sidebar) inteiramente traduzida (PT/EN/HR) com navegação dedicada para Dashboard, Notícias, Categorias, Animais, Utilizadores e atalho para o site público.
+  - Seletor de idioma integrado diretamente na barra superior do painel administrativo.
   - Indicação em tempo real do utilizador autenticado com badge visual do seu papel (`admin` a roxo, `editor` a azul).
 
-### 8.2. Integração do Editor Rich-Text (Quill.js v2)
+### 9.2. Integração do Editor Rich-Text (Quill.js v2)
 
 Nos formulários de criação ([resources/views/admin/news/create.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/admin/news/create.blade.php)) e edição de notícias ([resources/views/admin/news/edit.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/admin/news/edit.blade.php)):
 
-- O `<textarea>` simples foi substituído pelo contentor `<div id="editor">` alimentado pelo motor do **Quill.js v2**.
+- O `<textarea>` simples foi substituído pelo contentor `<div id="quill-editor">` alimentado pelo motor do **Quill.js v2**.
 - A barra de ferramentas disponibiliza opções ricas: cabeçalhos `H1-H3`, formatação de texto (`bold`, `italic`, `underline`, `strike`), listas com marcadores e numeração, blocos de citação (`blockquote`), blocos de código (`code-block`), links e imagens.
-- A sincronização é feita através de JavaScript no momento do envio (`onsubmit`):
-  ```javascript
-  const quill = new Quill('#editor', { theme: 'snow' });
-  const form = document.querySelector('form');
-  form.onsubmit = function() {
-      document.querySelector('#hidden-content').value = quill.root.innerHTML;
-  };
-  ```
+- A sincronização é feita através de JavaScript no momento do envio (`onsubmit`), preenchendo o campo oculto `#content` com `quill.root.innerHTML` antes da sanitização server-side.
 
-### 8.3. Sistema de Internacionalização (i18n) Trilingue
+### 9.3. Sistema de Internacionalização (i18n) Trilingue Completo
 
-O PawSafe suporta três idiomas completos:
-- **Português (`pt`)** — Idioma principal padrão.
-- **Inglês (`en`)** — Para alcance internacional e Erasmus.
-- **Croata (`hr`)** — Conforme solicitado nos requisitos.
+O PawSafe suporta três idiomas integrais tanto na interface pública como em todas as vistas do painel administrativo:
+- **Português (`pt`)** — Idioma principal padrão ([lang/pt/messages.php](file:///d:/erasmus/ntp/NTPWS-26_27/lang/pt/messages.php)).
+- **Inglês (`en`)** — Para alcance internacional e Erasmus ([lang/en/messages.php](file:///d:/erasmus/ntp/NTPWS-26_27/lang/en/messages.php)).
+- **Croata (`hr`)** — Conforme solicitado nos requisitos ([lang/hr/messages.php](file:///d:/erasmus/ntp/NTPWS-26_27/lang/hr/messages.php)).
 
-Todos os ficheiros de idioma encontram-se em `lang/{locale}/messages.php`, contendo cerca de **170 chaves de tradução cada**, garantindo cobertura integral de navegação, formulários, badges, mensagens de validação, desafios 2FA e rodapé.
+Cada ficheiro contém exatamente **334 chaves de tradução** perfeitamente alinhadas, cobrindo:
+- Navegação, menus, rodapé e bandeiras vetoriais (`pt.svg`, `gb.svg`, `hr.svg`).
+- Páginas públicas: Início, Sobre o Projeto (`about.blade.php`), Notícias e detalhes (`news/show.blade.php`), Catálogo e ficha de animais (`pets/show.blade.php`).
+- Autenticação, Perfil e Configuração/Desafio 2FA.
+- **Painel Administrativo completo**: `dashboard.blade.php`, `categories/*`, `news/*`, `pets/*`, `users/*` e `layouts/admin.blade.php`.
 
-A comutação é feita através da rota `/locale/{locale}` tratada por `HomeController::changeLocale`, que armazena a escolha na sessão e recarrega a página de imediato.
+A comutação é feita através da rota `/locale/{locale}` tratada por `HomeController::changeLocale`, que valida o idioma contra `SetLocale::SUPPORTED_LOCALES`, armazena a escolha na sessão HTTP e redireciona via `redirect()->back(fallback: route('home'))` para evitar loops caso não exista cabeçalho `Referer`.
 
 ---
 
-## 9. Segurança em Profundidade (Defense in Depth)
+## 10. Segurança em Profundidade (Defense in Depth)
 
 A arquitetura do PawSafe foi concebida segundo o modelo de defesa em profundidade, garantindo que a segurança não depende de uma única barreira:
 
@@ -683,49 +871,65 @@ A arquitetura do PawSafe foi concebida segundo o modelo de defesa em profundidad
 
 ---
 
-## 10. Testes Automatizados & Qualidade de Software
+## 11. Testes Automatizados & Qualidade de Software
 
-O projeto dispõe de uma suite completa de **33 testes automatizados** baseados em PHPUnit e na framework de testes do Laravel com o trait `RefreshDatabase`, garantindo isolamento total:
+O projeto dispõe de uma suíte completa de **39 testes automatizados (146 asserções)** baseados em PHPUnit 12 e na framework de testes do Laravel com o trait `RefreshDatabase`, garantindo isolamento total da base de dados entre execuções:
 
 ```bash
 php artisan test
 ```
 
-### Detalhe das Classes de Teste (`tests/Feature/`)
+### Detalhe das Classes de Teste (`tests/Feature/` e `tests/Unit/`)
 
-1. **`AuthTest.php`** ([tests/Feature/AuthTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/AuthTest.php)) — **8 testes**:
-   - `test_registration_with_valid_data`: Registo com sucesso e validação de que o utilizador recebe obrigatoriamente o papel `user`.
-   - `test_registration_with_duplicate_email`: Rejeição de registos com emails já existentes.
-   - `test_registration_with_invalid_password_confirmation`: Falha quando as passwords não coincidem.
-   - `test_login_with_valid_credentials` e `test_login_with_invalid_credentials`: Verificação de credenciais.
-   - `test_login_with_inactive_account`: Bloqueio imediato de utilizadores com `is_active = false`.
-   - `test_admin_panel_redirects_unauthenticated`: Redirecionamento de utilizadores anónimos para `/login`.
-   - `test_regular_user_cannot_access_admin`: Resposta `403 Forbidden` quando um utilizador comum tenta aceder a `/admin`.
-   - `test_editor_cannot_edit_another_editors_news`: Confirmação de que um editor recebe `403` ao tentar editar artigo de outro autor.
-2. **`ApiTest.php`** ([tests/Feature/ApiTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/ApiTest.php)) — **6 testes**:
-   - `test_api_news_list_returns_only_published`: Garante que rascunhos nunca aparecem na listagem pública.
-   - `test_api_news_show_returns_404_for_draft`: Resposta `404 Not Found` ao pedir o detalhe de um rascunho por ID.
-   - `test_api_create_news_requires_authentication`: Resposta `401 Unauthorized` para utilizadores não autenticados.
-   - `test_api_create_news_as_editor`: Criação de artigo com resposta `201 Created` e persistência na base de dados.
-   - `test_api_create_news_validation_fails_missing_fields`: Resposta `400 Bad Request` em caso de payload incompleto.
-   - `test_api_delete_returns_204`: Resposta `204 No Content` sem corpo ao remover um artigo.
+1. **`AuthTest.php`** ([tests/Feature/AuthTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/AuthTest.php)) — **10 testes**:
+   - Registo com dados válidos e atribuição obrigatória do papel `user`.
+   - Rejeição de registos com emails duplicados ou confirmação de palavra-passe inválida.
+   - Verificação de login com credenciais válidas, inválidas e bloqueio imediato de contas com `is_active = false`.
+   - Redirecionamento de visitantes para `/login` ao tentar aceder a `/admin`.
+   - Resposta `403 Forbidden` quando um utilizador comum tenta aceder a `/admin` ou quando um editor tenta editar artigo de outro autor.
+2. **`ApiTest.php`** ([tests/Feature/ApiTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/ApiTest.php)) — **7 testes**:
+   - Garante que `GET /api/v1/news` devolve apenas notícias publicadas e nunca rascunhos.
+   - `GET /api/v1/news/{id}` devolve `404 Not Found` para rascunhos.
+   - `POST /api/v1/news` exige autenticação (`401`), valida payload (`400`) e permite criação por editor/admin (`201`).
+   - `DELETE /api/v1/news/{id}` devolve `204 No Content` sem corpo.
 3. **`TwoFactorTest.php`** ([tests/Feature/TwoFactorTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/TwoFactorTest.php)) — **9 testes**:
    - Acesso ao ecrã de setup e geração de segredo Base32.
-   - Confirmação com código TOTP válido gerado pelo `TotpService`.
-   - Rejeição de códigos inválidos.
+   - Confirmação com código TOTP válido gerado pelo `TotpService` e rejeição de códigos inválidos.
    - Redirecionamento obrigatório para `/two-factor-challenge` durante o login de utilizadores com 2FA.
-   - Conclusão bem-sucedida do login com código TOTP.
-   - Conclusão de login utilizando código de recuperação e **invalidação de uso único do código consumido**.
-   - Desativação protegida de 2FA mediante confirmação de palavra-passe correta e rejeição de palavra-passe errada.
-4. **`PawSafePagesTest.php`** ([tests/Feature/PawSafePagesTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/PawSafePagesTest.php)) — **9 testes**:
-   - Carregamento com sucesso de todas as rotas públicas (`/`, `/about`, `/news`, `/news/{slug}`, `/pets`).
+   - Conclusão bem-sucedida do login com código TOTP ou código de recuperação (com **invalidação de uso único**).
+   - Desativação protegida de 2FA mediante confirmação da palavra-passe atual.
+4. **`PawSafePagesTest.php`** ([tests/Feature/PawSafePagesTest.php](file:///d:/erasmus/ntp/NTPWS-26_27/tests/Feature/PawSafePagesTest.php)) — **11 testes**:
+   - Carregamento com sucesso de todas as rotas públicas (`/`, `/about`, `/news`, `/news/{slug}`, `/pets`, `/pets/{pet}`).
    - Respostas da API `/api/v1/news` e do endpoint de JSON Schema `/api/v1/schema`.
-   - Comutação dinâmica de idioma para Inglês (`/locale/en`), Croata (`/locale/hr`) e Português (`/locale/pt`), com verificação de strings renderizadas.
+   - Comutação dinâmica de idioma para Inglês (`/locale/en`), Croata (`/locale/hr`) e Português (`/locale/pt`), validando strings renderizadas no portal público e no painel admin.
    - Rejeição de locales inválidos (ex: `/locale/de`), mantendo a sessão protegida.
+5. **`ExampleTest.php` (`Feature` e `Unit`)** — **2 testes base** de verificação estrutural da aplicação.
 
 ---
 
-## 11. Guia de Instalação, Configuração e Execução
+## 12. Automação, Vídeo Demonstrativo & Capturas de Ecrã (Playwright)
+
+Para validação visual end-to-end e demonstração do sistema completo, o projeto integra scripts de automação baseados em **Playwright** (`scripts/`) operando sobre o servidor local PHP:
+
+### 12.1. Vídeo Walkthrough Completo (`scripts/record_demo.cjs`)
+- **Script:** [scripts/record_demo.cjs](file:///d:/erasmus/ntp/NTPWS-26_27/scripts/record_demo.cjs)
+- **Vídeo Gerado:** [pawsafe-demo.webm](file:///d:/erasmus/ntp/NTPWS-26_27/pawsafe-demo.webm) (também disponível em [public/videos/pawsafe-demo.webm](file:///d:/erasmus/ntp/NTPWS-26_27/public/videos/pawsafe-demo.webm))
+- **Player Interativo:** [public/demo.html](file:///d:/erasmus/ntp/NTPWS-26_27/public/demo.html) — interface web com 15 capítulos clicáveis que permitem saltar diretamente para cada funcionalidade gravada (Portal Público, PT/EN/HR, APIs de Raças, Registo/Login, 2FA QR Code, Submissão de Adoção, Admin Dashboard, Quill.js, RBAC e Admin Multilíngue).
+
+### 12.2. Capturas de Ecrã em Inglês (`scripts/capture_screenshots.cjs`)
+- **Script:** [scripts/capture_screenshots.cjs](file:///d:/erasmus/ntp/NTPWS-26_27/scripts/capture_screenshots.cjs)
+- **Diretoria de Saída:** [screenshots/](file:///d:/erasmus/ntp/NTPWS-26_27/screenshots/) e [public/screenshots/](file:///d:/erasmus/ntp/NTPWS-26_27/public/screenshots/)
+- **Imagens Geradas (1440x900 @ 1.5x DPR):**
+  1. `01_home_page.png` — Página Inicial em Inglês
+  2. `02_about_page.png` — Página "About Us" em Inglês
+  3. `03_news_page.png` — Catálogo de Notícias em Inglês
+  4. `04_pets_catalog.png` — Catálogo de Animais com Filtros em Inglês
+  5. `05_pet_detail.png` — Detalhe do Animal + Integração Breed API em Inglês
+  6. `06_admin_dashboard.png` — Painel de Administração em Inglês
+
+---
+
+## 13. Guia de Instalação, Configuração e Execução
 
 ### Pré-requisitos
 - PHP 8.2 ou superior com extensões: `bcmath`, `ctype`, `cURL`, `dom`, `fileinfo`, `json`, `mbstring`, `openssl`, `pdo`, `sqlite3` ou `pdo_mysql`.
@@ -773,7 +977,7 @@ A aplicação ficará disponível em `http://127.0.0.1:8000`.
 
 ---
 
-## 12. Perguntas e Respostas para Defesa e Avaliação do Projeto
+## 14. Perguntas e Respostas para Defesa e Avaliação do Projeto
 
 Esta secção prepara os autores do projeto para responder com segurança a perguntas técnicas colocadas pelo docente ou júri:
 
@@ -803,6 +1007,15 @@ Esta secção prepara os autores do projeto para responder com segurança a perg
 
 ### P5: Como foi cumprido o requisito de que "pelo menos uma parte da aplicação deve usar a sua própria API"?
 **R:** No módulo público de notícias ([resources/views/public/news/index.blade.php](file:///d:/erasmus/ntp/NTPWS-26_27/resources/views/public/news/index.blade.php)), foi introduzido um componente visual assíncrono. Em vez de receber os dados diretamente pelo controlador Blade, esse bloco executa um script JavaScript nativo no browser do cliente (`fetch('/api/v1/news?per_page=3')`). A resposta é processada via JSON e os cartões de notícias são criados e inseridos no DOM dinamicamente pelo cliente, demonstrando de forma prática o funcionamento e consumo real da API RESTful desenvolvida.
+
+### P6: Como funciona a internacionalização dinâmica sem duplicar rotas e como evitar loops de redirecionamento?
+**R:** Todas as vistas Blade utilizam a função auxiliar `__('messages.chave')` em conjunto com os dicionários em `lang/{pt,en,hr}/messages.php` (334 chaves alinhadas por idioma). O middleware global `SetLocale` lê `session('locale')` em cada requisição web e define `App::setLocale()`. Quando o utilizador clica numa bandeira, a rota `/locale/{locale}` executa `HomeController::changeLocale()`, que valida o idioma e devolve `redirect()->back(fallback: route('home'))` — o parâmetro `fallback` evita que um acesso direto sem cabeçalho `Referer` entre em ciclo infinito sobre si próprio.
+
+### P7: Como garantem que a aprovação de uma adoção não deixa múltiplos candidatos aprovados para o mesmo animal?
+**R:** O método `AdminPetController::updateAdoptionRequest()` encapsula toda a decisão numa transação atómica `DB::transaction()`. Ao aprovar um pedido, altera o estado do pedido selecionado para `approved`, atualiza o estado do animal para `pending` e marca automaticamente todos os outros pedidos concorrentes desse animal como `rejected`. Caso ocorra qualquer falha a meio, a base de dados reverte tudo (rollback). Adicionalmente, a tabela `adoption_requests` tem uma chave única composta `unique(['pet_id', 'user_id'])` impedindo candidaturas duplicadas do mesmo utilizador.
+
+### P8: Como garantem que o HTML produzido pelo editor rich-text Quill.js é seguro contra XSS?
+**R:** Embora o Quill.js produza HTML formatado no cliente, o servidor nunca confia no input recebido. Tanto no `AdminNewsController` (interface web) como no `ApiNewsController` (API REST), o conteúdo passa pelo método `sanitizeHtml()`, que aplica `strip_tags()` com uma whitelist estrita de tags estruturais (`<p>`, `<strong>`, `<em>`, `<h1>`-`<h6>`, `<ul>`, `<ol>`, `<li>`, `<a>`, `<img>`, `<blockquote>`, etc.), removendo qualquer tag `<script>`, `<iframe>` ou manipulador perigoso antes da persistência na base de dados.
 
 ---
 
